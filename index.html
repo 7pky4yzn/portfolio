@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poster Style Portfolio</title>
+  
+  <!-- Locomotive Scroll CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+  
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    html, body {height: 100%; font-family: sans-serif; background: #000; color: #fff;}
+    
+    .container {
+      overflow: hidden;
+    }
+
+    section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div data-scroll-container class="container">
+    <section data-scroll-section>
+      <img src="1.png" alt="Image 1">
+    </section>
+
+    <section data-scroll-section>
+      <img src="2.png" alt="Image 2">
+    </section>
+
+    <section data-scroll-section>
+      <img src="3.png" alt="Image 3">
+    </section>
+
+    <section data-scroll-section>
+      <img src="4.png" alt="Image 4">
+    </section>
+  </div>
+
+  <!-- Locomotive Scroll JS -->
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+  <script>
+    const scroll = new LocomotiveScroll({
+      el: document.querySelector("[data-scroll-container]"),
+      smooth: true,
+      smartphone: { smooth: true },
+      tablet: { smooth: true }
+    });
+  </script>
+</body>
+</html>
