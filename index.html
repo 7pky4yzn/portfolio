@@ -3,79 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio</title>
+  <title>Poster Style Portfolio</title>
+  
+  <!-- Locomotive Scroll CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+  
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-      background: black;
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    html, body {height: 100%; font-family: sans-serif; background: #000; color: #fff;}
+    
+    .container {
+      overflow: hidden;
     }
+
     section {
       height: 100vh;
-      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
     }
+
     section img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      transition: filter 0.1s ease-out;
+      object-fit: cover; /* Ensures no stretching */
+      image-rendering: auto; /* Smooth scaling */
+      -webkit-backface-visibility: hidden;
+      -webkit-transform: translateZ(0); /* Prevent jagged edges during GPU scaling */
+      transform: translateZ(0);
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <section><img src="1.png" alt="Portfolio Image 1"></section>
-  <section><img src="2.png" alt="Portfolio Image 2"></section>
-  <section><img src="3.png" alt="Portfolio Image 3"></section>
-  <section><img src="4.png" alt="Portfolio Image 4"></section>
+  <div data-scroll-container class="container">
+    <section data-scroll-section>
+      <img src="1.png" alt="Image 1">
+    </section>
 
+    <section data-scroll-section>
+      <img src="2.png" alt="Image 2">
+    </section>
+
+    <section data-scroll-section>
+      <img src="3.png" alt="Image 3">
+    </section>
+
+    <section data-scroll-section>
+      <img src="4.png" alt="Image 4">
+    </section>
+  </div>
+
+  <!-- Locomotive Scroll JS -->
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
   <script>
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
-    function updateBlur() {
-      let currentScrollY = window.scrollY;
-      let velocity = Math.abs(currentScrollY - lastScrollY);
-
-      // Map velocity → blur strength
-      let blur = Math.min(velocity / 30, 8); // max 8px blur
-
-      document.querySelectorAll("section img").forEach(img => {
-        img.style.filter = `blur(${blur}px)`;
-      });
-
-      lastScrollY = currentScrollY;
-      ticking = false;
-    }
-
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateBlur);
-        ticking = true;
-      }
-    });
-
-    // Gradually remove blur when scrolling stops
-    window.addEventListener("scrollend", () => {
-      document.querySelectorAll("section img").forEach(img => {
-        img.style.filter = "blur(0px)";
-      });
-    });
-
-    // Polyfill for scrollend (for browsers that don't support it yet)
-    let scrollTimeout;
-    window.addEventListener("scroll", () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        document.querySelectorAll("section img").forEach(img => {
-          img.style.filter = "blur(0px)";
-        });
-      }, 120);
+    const scroll = new LocomotiveScroll({
+      el: document.querySelector("[data-scroll-container]"),
+      smooth: true,
+      lerp: 0.07, // 0.05–0.1 range = buttery smooth
+      multiplier: 1.2, // adjusts scroll speed
+      smartphone: { smooth: true },
+      tablet: { smooth: true }
     });
   </script>
 </body>
