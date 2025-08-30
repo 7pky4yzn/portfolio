@@ -62,10 +62,10 @@
     const scroll = new LocomotiveScroll({
       el: document.querySelector("[data-scroll-container]"),
       smooth: true,
-      lerp: 0.07, // 0.05–0.1 range = buttery smooth
-      multiplier: 1.2, // adjusts scroll speed
-      smartphone: { smooth: true },
-      tablet: { smooth: true }
+      lerp: 0.1, // 0.05–0.1 range = buttery smooth
+      multiplier: 1, // adjusts scroll speed
+      smartphone: { smooth: false },
+      tablet: { smooth: false }
     });
   </script>
 </body>
