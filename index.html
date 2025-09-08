@@ -10,15 +10,27 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
   
   <style>
-    * {margin: 0; padding: 0; box-sizing: border-box;}
-    html, body {height: 100%; font-family: sans-serif; background: #000; color: #fff;}
-    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: sans-serif;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+    }
+
     .container {
       overflow: hidden;
     }
 
     section {
       height: 100vh;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -28,31 +40,38 @@
     section img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Ensures no stretching */
-      image-rendering: auto; /* Smooth scaling */
+      object-fit: cover;            /* Fills screen, no stretch */
+      image-rendering: crisp-edges; /* Better sharpness on 2K */
       -webkit-backface-visibility: hidden;
-      -webkit-transform: translateZ(0); /* Prevent jagged edges during GPU scaling */
+      -webkit-transform: translateZ(0);
       transform: translateZ(0);
       pointer-events: none;
+    }
+
+    /* For very high-DPI (2K/4K) screens */
+    @media (min-width: 1920px) {
+      section img {
+        image-rendering: pixelated;
+      }
     }
   </style>
 </head>
 <body>
   <div data-scroll-container class="container">
     <section data-scroll-section>
-      <img src="1.png" alt="Image 1">
+      <img src="1.png" alt="Image 1" loading="lazy">
     </section>
 
     <section data-scroll-section>
-      <img src="2.png" alt="Image 2">
+      <img src="2.png" alt="Image 2" loading="lazy">
     </section>
 
     <section data-scroll-section>
-      <img src="3.png" alt="Image 3">
+      <img src="3.png" alt="Image 3" loading="lazy">
     </section>
 
     <section data-scroll-section>
-      <img src="4.png" alt="Image 4">
+      <img src="4.png" alt="Image 4" loading="lazy">
     </section>
   </div>
 
@@ -62,8 +81,8 @@
     const scroll = new LocomotiveScroll({
       el: document.querySelector("[data-scroll-container]"),
       smooth: true,
-      lerp: 0.1, // 0.05–0.1 range = buttery smooth
-      multiplier: 1, // adjusts scroll speed
+      lerp: 0.07, // buttery smooth for big images
+      multiplier: 1,
       smartphone: { smooth: false },
       tablet: { smooth: false }
     });
