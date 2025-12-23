@@ -1,163 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ishit Singh | Portfolio</title>
-    <style>
-        :root {
-            --bg-color: #000000;
-            --text-color: #f5f5f7;
-            --subtext-color: #86868b;
-            --nav-bg: rgba(22, 22, 23, 0.7);
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-            --transition-speed: 1.2s;
-            --spring-easing: cubic-bezier(0.4, 0, 0.2, 1);
-            --max-width-narrative: 850px;
-            --max-width-grid: 1200px; 
-            
-            --color-dev: #2997ff;    
-            --color-design: #af52de; 
-            --color-system: #32d74b; 
-            --color-lab: #ff9f0a;    
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ishit Singh | Portfolio</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; background: var(--bg-color); }
-        body { background-color: var(--bg-color); color: var(--text-color); font-family: var(--font-main); -webkit-font-smoothing: antialiased; }
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #1d1d1f;
+      --subtext-color: #6e6e73;
+      --nav-bg: rgba(255, 255, 255, 0.7);
+      --card-bg: rgba(0, 0, 0, 0.03);
+      --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+      --transition-speed: 1.4s;
+      --spring-easing: cubic-bezier(0.16, 1, 0.3, 1);
+      --max-width-grid: 1100px;
+      --color-dev: #0071e3;
+      --color-design: #af52de;
+      --color-media: #ff3b30;
+      --color-experiment: #f56300;
+    }
 
-        /* --- NAVIGATION --- */
-        .nav-container { position: fixed; top: 32px; left: 50%; transform: translateX(-50%); z-index: 1000; }
-        nav { background: var(--nav-bg); backdrop-filter: blur(25px) saturate(180%); padding: 8px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 4px; }
-        .nav-btn { background: transparent; border: none; color: var(--text-color); padding: 8px 24px; font-size: 14px; font-weight: 500; border-radius: 40px; cursor: pointer; opacity: 0.5; transition: 0.3s; }
-        .nav-btn.active { background: rgba(255, 255, 255, 0.1); opacity: 1; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html, body { 
+      min-height: 100%;
+      background-color: var(--bg-color);
+      /* SOFT NESTED LIGHT GRADIENTS FOR WHITE THEME */
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(0, 113, 227, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 10%, rgba(175, 82, 222, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(255, 59, 48, 0.03) 0%, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-color);
+      font-family: var(--font-main);
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
 
-        /* --- REVEAL ENGINE --- */
-        .reveal { opacity: 0; filter: blur(40px); transform: scale(0.98) translateY(50px); transition: all var(--transition-speed) var(--spring-easing); will-change: filter, opacity, transform; }
-        .reveal.active { opacity: 1; filter: blur(0px); transform: scale(1) translateY(0); }
-        .out-focus { filter: blur(30px) !important; opacity: 0.15 !important; transform: scale(0.95) translateY(-50px) !important; }
+    /* NAVIGATION - LIGHT BLUR */
+    header { position: fixed; left: 50%; transform: translateX(-50%); top: 40px; z-index: 1000; }
+    nav { background: var(--nav-bg); backdrop-filter: blur(30px); padding: 8px; border-radius: 50px; border: 1px solid rgba(0, 0, 0, 0.08); display: flex; gap: 8px; box-shadow: 0 4px 30px rgba(0,0,0,0.03); }
+    .nav-btn { background: transparent; border: 0; color: var(--text-color); padding: 8px 22px; font-size: 13px; font-weight: 500; border-radius: 40px; cursor: pointer; opacity: .4; transition: 0.3s; }
+    .nav-btn.active { background: rgba(0, 0, 0, 0.05); opacity: 1; }
 
-        /* --- TAB SYSTEM --- */
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: tabFade 0.6s ease forwards; }
-        @keyframes tabFade { from { opacity: 0; } to { opacity: 1; } }
+    /* REVEAL SYSTEM */
+    .reveal { 
+      opacity: 0; 
+      filter: blur(20px); 
+      transform: translateY(40px) scale(0.98); 
+      transition: all var(--transition-speed) var(--spring-easing); 
+    }
+    .reveal.active { opacity: 1; filter: blur(0px); transform: translateY(0) scale(1); }
+    .reveal.out-focus { filter: blur(30px); opacity: 0; transform: translateY(-60px) scale(0.95); }
 
-        /* --- HERO & BENTO (HOME) --- */
-        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .hero h1 { font-size: clamp(64px, 15vw, 150px); font-weight: 700; letter-spacing: -0.05em; background: linear-gradient(180deg, #fff 30%, #444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .projects-section { max-width: var(--max-width-grid); margin: 0 auto; padding: 0 24px 20vh 24px; }
-        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; grid-auto-rows: 300px; }
-        .bento-card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 32px; padding: 32px; text-decoration: none; color: inherit; transition: all 0.5s var(--spring-easing); display: flex; flex-direction: column; position: relative; overflow: hidden; }
-        .large { grid-column: span 2; grid-row: span 2; justify-content: flex-end; }
-        .wide { grid-column: span 2; justify-content: flex-end; }
-        .bento-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 8px; color: #fff; }
-        .tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; display: inline-block; padding: 4px 10px; border-radius: 8px; width: fit-content; }
-        .tag.dev { color: var(--color-dev); background: rgba(41, 151, 255, 0.1); }
-        .tag.design { color: var(--color-design); background: rgba(175, 82, 222, 0.1); }
-        .tag.system { color: var(--color-system); background: rgba(50, 215, 75, 0.1); }
-        .tag.lab { color: var(--color-lab); background: rgba(255, 159, 10, 0.1); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
-        /* --- ABOUT NARRATIVE & SKILLS --- */
-        .about-view { padding-top: 25vh; }
-        .section-container { 
-            max-width: var(--max-width-narrative); 
-            margin: 0 auto; 
-            padding: 0 32px 30vh 32px; 
-        }
-        .section-container h2 { font-size: 56px; font-weight: 700; margin-bottom: 64px; color: #ffffff; letter-spacing: -0.03em; }
-        .section-container p { font-size: 28px; line-height: 1.6; color: var(--subtext-color); margin-bottom: 60px; letter-spacing: -0.01em; }
-        .highlight { color: #ffffff; font-weight: 700; }
+    /* HOME STYLES */
+    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .hero h1 { 
+      font-size: clamp(48px, 12vw, 90px); 
+      font-weight: 700; 
+      letter-spacing: -.05em; 
+      background: linear-gradient(180deg, #1d1d1f 60%, #86868b 100%); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+    }
+    
+    .projects-section { max-width: var(--max-width-grid); margin: 0 auto; padding: 0 24px 30vh 24px; }
+    .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; grid-auto-rows: 280px; }
+    
+    .bento-card { 
+      background: var(--card-bg); 
+      border: 1px solid rgba(0, 0, 0, 0.04); 
+      border-radius: 32px; 
+      padding: 40px; 
+      display: flex; 
+      flex-direction: column; 
+      transition: transform 0.6s var(--spring-easing), background 0.6s, box-shadow 0.6s, border 0.6s;
+    }
+    .bento-card:hover { 
+      transform: scale(1.035); 
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+    }
 
-        @media (max-width: 1000px) {
-            .bento-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
-            .large, .wide { grid-column: span 2; min-height: 300px; }
-            .section-container p { font-size: 22px; }
-            .section-container h2 { font-size: 42px; }
-        }
-    </style>
+    .large { grid-column: span 2; grid-row: span 2; justify-content: flex-end; }
+    .wide { grid-column: span 2; justify-content: flex-end; }
+    .bento-card h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; color: var(--text-color); }
+    .bento-card p { color: var(--subtext-color); font-size: 14px; line-height: 1.5; }
+
+    .tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; margin-bottom: 16px; display: inline-block; padding: 4px 10px; border-radius: 6px; width: fit-content; }
+    .tag.dev { color: var(--color-dev); background: rgba(0, 113, 227, 0.08); }
+    .tag.design { color: var(--color-design); background: rgba(175, 82, 222, 0.08); }
+    .tag.media { color: var(--color-media); background: rgba(255, 59, 48, 0.08); }
+
+    /* ABOUT STYLES */
+    .about-view { padding-top: 25vh; }
+    .section-container { max-width: 850px; margin: 0 auto; padding: 0 32px 14rem 32px; }
+    .section-container h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--subtext-color); margin-bottom: 40px; font-weight: 600; }
+    
+    .narrative-title { font-size: 38px; font-weight: 700; color: var(--text-color); margin-bottom: 32px; letter-spacing: -0.02em; line-height: 1.2; }
+    .narrative-p { 
+      font-size: 18px; 
+      line-height: 1.8; 
+      color: var(--subtext-color); 
+      margin-bottom: 48px; 
+    }
+    .highlight { color: var(--text-color); font-weight: 600; }
+    
+    .deep-bottom { padding-bottom: 50vh; }
+
+    @media (max-width:900px) {
+      .bento-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .large, .wide { grid-column: span 2; }
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <nav role="tablist">
+      <button class="nav-btn active" data-target="home-tab">Home</button>
+      <button class="nav-btn" data-target="about-tab">About</button>
+    </nav>
+  </header>
 
-    <div class="nav-container">
-        <nav>
-            <button class="nav-btn active" onclick="showTab('home-tab', this)">Home</button>
-            <button class="nav-btn" onclick="showTab('about-tab', this)">About</button>
-        </nav>
-    </div>
+  <main>
+    <section id="home-tab" class="tab-content active">
+      <section class="hero"><h1 class="reveal">Ishit Singh.</h1></section>
+      <section class="projects-section">
+        <div class="bento-grid">
+          <div class="bento-card large reveal"><span class="tag dev">Systems</span><h3>Game Architecture</h3><p>Systemic gameplay modules and modular engine components in C#.</p></div>
+          <div class="bento-card reveal"><span class="tag design">3D Modeling</span><h3>Blender Lab</h3><p>Hard surface modeling and procedural generation.</p></div>
+          <div class="bento-card reveal"><span class="tag media">Vision</span><h3>Cinematography</h3><p>Narrative storytelling and cinematic lighting design.</p></div>
+          <div class="bento-card wide reveal"><span class="tag dev">Web</span><h3>Fluid Interfaces</h3><p>High-fidelity web experiences with TypeScript and React.</p></div>
+          <div class="bento-card reveal"><span class="tag design">Materials</span><h3>Surface Design</h3><p>Texture work in Substance Painter for asset integration.</p></div>
+          <div class="bento-card reveal"><span class="tag media">Sound</span><h3>Atmosphere</h3><p>Music production and sound design for digital environments.</p></div>
+        </div>
+      </section>
+    </section>
 
-    <div id="home-tab" class="tab-content active">
-        <section class="hero"><h1 class="reveal active">Ishit Singh.</h1></section>
-        <section class="projects-section">
-            <div class="bento-grid">
-                <a href="#" class="bento-card large reveal"><span class="tag dev">Development</span><h3>Titan Engine</h3><p>High-performance rendering.</p></a>
-                <a href="#" class="bento-card reveal"><span class="tag design">Design</span><h3>Aura UI</h3></a>
-                <a href="#" class="bento-card reveal"><span class="tag system">System</span><h3>Nexus Core</h3></a>
-                <a href="#" class="bento-card wide reveal"><span class="tag lab">Research</span><h3>Project Chronos</h3></a>
-                <a href="#" class="bento-card wide reveal"><span class="tag design">Design</span><h3>Zenith Brand</h3></a>
-                <a href="#" class="bento-card reveal"><span class="tag dev">Development</span><h3>Vapor</h3></a>
-                <a href="#" class="bento-card reveal"><span class="tag lab">Research</span><h3>Haptic Lab</h3></a>
-                <a href="#" class="bento-card reveal"><span class="tag design">Design</span><h3>Flux</h3></a>
-                <a href="#" class="bento-card wide reveal"><span class="tag dev">Development</span><h3>Pulse API</h3></a>
-                <a href="#" class="bento-card reveal"><span class="tag system">System</span><h3>Grid OS</h3></a>
-            </div>
-        </section>
-    </div>
+    <section id="about-tab" class="tab-content about-view">
+      
+      <article class="section-container">
+        <h2 class="reveal">Background</h2>
+        <h3 class="reveal narrative-title">The Foundation in Lucknow</h3>
+        <p class="reveal narrative-p">
+          My perspective as a creator was born in <span class="highlight">Lucknow</span>, a city that provided the backdrop for my earliest encounters with technology. Born on April 27, 2010, I spent my early childhood at <span class="highlight">The Tree House</span>, where the first seeds of curiosity were planted. This environment fostered a natural inclination toward understanding the mechanics of the world around me, setting the stage for a life defined by technical and artistic inquiry.
+        </p>
+        <p class="reveal narrative-p">
+          The years between 2014 and 2021 at <span class="highlight">St. Fidelis College</span> were essential in shaping my academic discipline. It was here that I began to move beyond simple curiosity and started exploring the digital landscape as a serious medium. This period was marked by a steady transition from being a consumer of digital content to becoming a student of its architecture.
+        </p>
+      </article>
 
-    <div id="about-tab" class="tab-content about-view">
+      <article class="section-container">
+        <h2 class="reveal">The Stack</h2>
+        <h3 class="reveal narrative-title">C# and Systems Logic</h3>
+        <p class="reveal narrative-p">
+          My approach to programming is rooted in the architecture of <span class="highlight">C#</span>. I view code as the skeletal system of any digital experience, requiring both flexibility and strength. I specialize in building modular engine components and systemic gameplay modules that can scale without friction.
+        </p>
+        <h3 class="reveal narrative-title">Advanced 3D in Blender</h3>
+        <p class="reveal narrative-p">
+          In the realm of <span class="highlight">Blender</span>, my work focuses on the philosophy of hard surface modeling. I prioritize clean topology and procedural workflows, ensuring that every asset is optimized for real-time rendering without sacrificing visual fidelity.
+        </p>
+      </article>
+
+      <article class="section-container">
+        <h2 class="reveal">Anomalies</h2>
+        <h3 class="reveal narrative-title">The Experimental Log</h3>
+        <p class="reveal narrative-p">
+          Beyond the structured world of design pipelines, I have always been driven by a "break it to understand it" mentality. One of my most persistent challenges was <span class="highlight">turning an aging laptop into a functioning Hackintosh</span>, fighting against hardware limitations to force an operating system into a space it was never meant to occupy.
+        </p>
+        <p class="reveal narrative-p">
+          Not every experiment has been a quiet technical success. There was a notable instance where my curiosity regarding electrical load led to <span class="highlight">short circuiting my entire room</span>. While it was a momentarily startling event, it served as a very practical introduction to the fundamental laws of electricity.
+        </p>
+        <p class="reveal narrative-p">
+          I have also spent time building custom hardware, such as <span class="highlight">assembling a functional MP3 player</span> from scratch. Projects like these allow me to appreciate the tactile side of technology, stepping away from the screen to work with raw, physical circuit boards.
+        </p>
+      </article>
+
+      <article class="section-container deep-bottom">
+        <h2 class="reveal">Experience</h2>
+        <h3 class="reveal narrative-title">Creative Direction</h3>
+        <p class="reveal narrative-p">
+          Currently, my focus is on <span class="highlight">Creative Direction</span>. I am no longer just building components, I am architecting entire experiences. By merging my background in cinematography with my technical engineering skills, I am building a portfolio of work that pushes the boundaries of digital storytelling.
+        </p>
+      </article>
+
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      const tabs = Array.from(document.querySelectorAll('.nav-btn'));
+      const panels = Array.from(document.querySelectorAll('.tab-content'));
+
+      function setActiveTab(targetTab){
+        const targetId = targetTab.dataset.target;
+        tabs.forEach(t => t.classList.toggle('active', t === targetTab));
+        panels.forEach(p => p.classList.toggle('active', p.id === targetId));
+        window.scrollTo({ top: 0 });
+        setTimeout(initObserver, 100); 
+      }
+
+      tabs.forEach(t => t.addEventListener('click', () => setActiveTab(t)));
+
+      let observer = null;
+      function initObserver(){
+        if(observer) observer.disconnect();
+        const reveals = document.querySelectorAll('.reveal');
         
-        <article class="section-container">
-            <h2 class="reveal">The Narrative</h2>
-            <p class="reveal">I build because creating feels <span class="highlight">instinctive</span> to me. I’m driven by the urge to turn abstract thoughts into things that work, feel intentional, and last. Whether it’s code, design, or sound, I’m always searching for clarity—stripping ideas down until what remains feels obvious and honest.</p>
-            <p class="reveal">I think deeply about systems and <span class="highlight">details</span>. Small decisions matter to me because they shape how something is experienced over time. I value ownership, independence, and work that respects the user rather than chasing attention or trends. Emotion and logic coexist in how I approach problems—structure gives form, but intent gives meaning.</p>
-            <p class="reveal">I learn by doing, experimenting, and <span class="highlight">iterating</span>. I’m comfortable figuring things out without a map, refining slowly instead of rushing for recognition. I prefer depth over noise, timelessness over novelty, and work that speaks quietly but confidently for itself.</p>
-        </article>
+        observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const el = entry.target;
+            if (entry.isIntersecting) {
+              el.classList.add('active');
+              el.classList.remove('out-focus');
+            } else if (entry.boundingClientRect.top < 0) {
+              el.classList.add('out-focus');
+              el.classList.remove('active');
+            } else {
+              el.classList.remove('active', 'out-focus');
+            }
+          });
+        }, { threshold: 0.1, rootMargin: "0px 0px -10% 0px" });
 
-        <article class="section-container">
-            <h2 class="reveal">Competencies</h2>
-            <p class="reveal">My technical foundation is built on <span class="highlight">full-stack architecture</span> and creative engineering. I specialize in bridging the gap between complex backend logic and fluid, high-fidelity interfaces that feel alive.</p>
-            <p class="reveal">In the realm of design, I focus on <span class="highlight">visual systems</span> and motion. I believe interaction is a conversation, and every micro-transition should guide the user with purpose and rhythmic elegance.</p>
-            <p class="reveal">Beyond execution, I am a <span class="highlight">systems thinker</span>. I enjoy optimizing workflows and building scalable environments where code and design don't just coexist, but amplify each other's impact.</p>
-        </article>
-
-        <article class="section-container" style="padding-bottom: 50vh;">
-            <h2 class="reveal">Instruments</h2>
-            <p class="reveal">My primary stack revolves around <span class="highlight">React, TypeScript, and Node.js</span>, often utilizing Framer Motion or GSAP to bring physical properties to digital surfaces.</p>
-            <p class="reveal">For design and prototyping, I rely on <span class="highlight">Figma and Cinema 4D</span>. I treat the canvas like a workshop, where lighting, material, and space are just as important as the code that follows.</p>
-            <p class="reveal">I am constantly evolving my toolkit, currently exploring <span class="highlight">WebGPU and Rust</span> to push the boundaries of what is possible in real-time browser-based experiences.</p>
-        </article>
-        
-    </div>
-
-    <script>
-        function showTab(tabId, btn) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
-            window.scrollTo(0, 0);
-            setTimeout(initObserver, 100);
-        }
-
-        let observer;
-        function initObserver() {
-            if (observer) observer.disconnect();
-            observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        entry.target.classList.remove('out-focus');
-                    } else if (entry.boundingClientRect.top < 0) {
-                        entry.target.classList.add('out-focus');
-                    } else {
-                        entry.target.classList.remove('active');
-                        entry.target.classList.remove('out-focus');
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: "0px 0px -15% 0px" });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        }
-        window.onload = initObserver;
-    </script>
+        reveals.forEach(el => observer.observe(el));
+      }
+      document.addEventListener('DOMContentLoaded', initObserver);
+    })();
+  </script>
 </body>
 </html>
