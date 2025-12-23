@@ -7,7 +7,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
 
   <style>
     :root {
@@ -22,6 +21,8 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; } /* Native smooth jumps */
+    
     body { 
       background: var(--bg); 
       color: var(--fg); 
@@ -56,27 +57,33 @@
       will-change: opacity, filter, transform;
     }
 
-    /* --- HOME PAGE STYLES (UNTOUCHED) --- */
+    /* GLOBAL HIG CONTAINER - 980px Standard */
+    .hig-container { 
+      max-width: 980px; 
+      margin: 0 auto; 
+      padding: 0 22px 40vh; 
+    }
+
+    /* --- HOME TAB --- */
     .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
     .hero h1 { 
-        font-size: clamp(40px, 10vw, 120px); 
+        font-size: clamp(40px, 8vw, 90px); 
         font-weight: 700; 
         letter-spacing: -0.05em; 
         color: var(--fg);
     }
 
-    .grid-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 40px 40vh; }
     .bento-grid { 
         display: grid; 
         grid-template-columns: repeat(13, 1fr); 
-        grid-auto-rows: 180px; 
-        gap: 24px; 
+        grid-auto-rows: 160px; 
+        gap: 20px; 
     }
     
     .card { 
         background: var(--card); 
-        border-radius: 34px; 
-        padding: 40px; 
+        border-radius: 24px; 
+        padding: 32px; 
         display: flex; 
         flex-direction: column; 
         justify-content: flex-end; 
@@ -89,12 +96,12 @@
     .r-3 { grid-row: span 3; }
     .r-2 { grid-row: span 2; }
 
-    .tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sub); margin-bottom: 12px; }
-    .card h3 { font-size: 24px; font-weight: 600; margin-bottom: 12px; color: #111; }
-    .card p { color: var(--sub); font-size: 15px; line-height: 1.5; font-weight: 400; }
+    .tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sub); margin-bottom: 12px; font-family: var(--font-mono); }
+    .card h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; color: #111; }
+    .card p { color: var(--sub); font-size: 14px; line-height: 1.5; }
 
-    /* --- ABOUT PAGE STYLES (APPLE HIG STYLE) --- */
-    .about-wrapper { max-width: 980px; margin: 0 auto; padding: 160px 22px; }
+    /* --- ABOUT TAB --- */
+    .about-section { padding-top: 160px; }
     
     .about-header { 
       border-bottom: 1px solid #d2d2d7; 
@@ -102,11 +109,11 @@
       margin-bottom: 0; 
     }
     .about-header h1 { font-size: 48px; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 12px; }
-    .about-header p { font-size: 24px; color: var(--sub); line-height: 1.3; max-width: 800px; }
+    .about-header p { font-size: 22px; color: var(--sub); line-height: 1.3; max-width: 700px; }
 
     .hig-row { 
       display: grid; 
-      grid-template-columns: 240px 1fr; 
+      grid-template-columns: 200px 1fr; 
       padding: 60px 0; 
       border-bottom: 1px solid #f2f2f2; 
     }
@@ -114,7 +121,7 @@
 
     .hig-label { 
       font-family: var(--font-mono); 
-      font-size: 13px; 
+      font-size: 12px; 
       font-weight: 500; 
       color: var(--fg); 
       text-transform: uppercase; 
@@ -122,9 +129,9 @@
       padding-top: 8px;
     }
 
-    .hig-content h2 { font-size: 32px; font-weight: 600; margin-bottom: 24px; letter-spacing: -0.02em; }
-    .hig-content p { font-size: 19px; color: var(--fg); margin-bottom: 24px; line-height: 1.5; }
-    .hig-content .sub-p { font-size: 17px; color: var(--sub); margin-top: -12px; }
+    .hig-content h2 { font-size: 32px; font-weight: 600; margin-bottom: 20px; letter-spacing: -0.02em; }
+    .hig-content p { font-size: 18px; color: var(--fg); margin-bottom: 20px; line-height: 1.5; }
+    .hig-content .sub-p { font-size: 16px; color: var(--sub); margin-top: -10px; }
     .highlight { color: var(--fg); font-weight: 600; }
 
     .tab-content { display: none; }
@@ -132,9 +139,10 @@
 
     @media (max-width: 900px) { 
       .bento-grid { display: flex; flex-direction: column; } 
-      .card { min-height: 320px; } 
+      .card { min-height: 280px; } 
       .hig-row { grid-template-columns: 1fr; gap: 20px; padding: 40px 0; }
       .about-header h1 { font-size: 36px; }
+      .hig-container { padding: 0 24px 20vh; }
     }
   </style>
 </head>
@@ -151,7 +159,7 @@
     <section id="home-tab" class="tab-content active">
       <section class="hero"><h1 class="reveal">Ishit Singh.</h1></section>
       
-      <div class="grid-wrapper">
+      <div class="hig-container">
         <div class="bento-grid">
           <div class="card c-8 r-3 reveal">
             <span class="tag">Systems Logic</span>
@@ -161,7 +169,7 @@
           <div class="card c-5 r-2 reveal">
             <span class="tag">3D Design</span>
             <h3>Advanced Blender</h3>
-            <p>Translating complex mechanical designs into digital geometry that feels weighted, functional, and grounded in physical reality.</p>
+            <p>Translating complex mechanical designs into digital geometry that feels weighted and functional.</p>
           </div>
           <div class="card c-5 r-3 reveal">
             <span class="tag">Production</span>
@@ -171,20 +179,18 @@
           <div class="card c-8 r-2 reveal">
             <span class="tag">Experimental</span>
             <h3>The Log</h3>
-            <p>Pushing hardware past intended limits. From kernel-level Hackintosh patches to electrical load experiments that redefine "learning by breaking."</p>
+            <p>Pushing hardware past intended limits. From kernel-level Hackintosh patches to electrical load experiments.</p>
           </div>
         </div>
       </div>
     </section>
 
     <section id="about-tab" class="tab-content">
-      <div class="about-wrapper">
-        
+      <div class="hig-container about-section">
         <div class="about-header reveal">
           <h1>Guidelines</h1>
           <p>Fusing engineering with creative vision to build the future of technical artistry.</p>
         </div>
-
         <div class="hig-row reveal">
           <div class="hig-label">Foundation</div>
           <div class="hig-content">
@@ -194,7 +200,6 @@
             <p class="sub-p">Currently navigating the intersection of engineering and design at <span class="highlight">Sunbeam School</span>, Robertsganj.</p>
           </div>
         </div>
-
         <div class="hig-row reveal">
           <div class="hig-label">Philosophy</div>
           <div class="hig-content">
@@ -202,7 +207,6 @@
             <p>I view code as the skeletal system of any digital experience—requiring flexibility and strength. Whether in <span class="highlight">C#</span> or <span class="highlight">Blender</span>, my approach is <strong>logic-first</strong>.</p>
           </div>
         </div>
-
         <div class="hig-row reveal">
           <div class="hig-label">Anomalies</div>
           <div class="hig-content">
@@ -210,16 +214,11 @@
             <p>Hardware projects that push environments to their limits. Architecting functional <span class="highlight">Hackintosh</span> systems and diving into kernel patches to force software into spaces it was never meant to occupy.</p>
           </div>
         </div>
-
       </div>
     </section>
   </main>
 
   <script>
-    const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-
     gsap.registerPlugin(ScrollTrigger);
 
     function initAnimations() {
@@ -245,11 +244,14 @@
       btn.addEventListener('click', () => {
         buttons.forEach(b => b.classList.toggle('active', b === btn));
         tabs.forEach(t => t.classList.toggle('active', t.id === btn.dataset.target));
-        lenis.scrollTo(0, { immediate: true });
+        
+        // Jump to top immediately when switching tabs
+        window.scrollTo(0, 0);
+        
         setTimeout(() => { 
           initAnimations(); 
           ScrollTrigger.refresh(); 
-        }, 100);
+        }, 50);
       });
     });
 
