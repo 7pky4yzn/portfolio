@@ -15,13 +15,12 @@
       --sub: #86868b; 
       --card: #f5f5f7; 
       --border: rgba(0, 0, 0, 0.05);
-      --phi: 1.618;
-      --font: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", sans-serif;
+      --font: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: "SF Mono", "SFMono-Regular", ui-monospace, monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; } /* Native smooth jumps */
+    html { scroll-behavior: smooth; }
     
     body { 
       background: var(--bg); 
@@ -29,10 +28,9 @@
       font-family: var(--font); 
       -webkit-font-smoothing: antialiased; 
       overflow-x: hidden;
-      letter-spacing: -0.015em;
     }
 
-    /* LIGHT NAV: Glassmorphism */
+    /* NAVIGATION */
     header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; justify-content: center; padding-top: 24px; }
     nav { 
       background: rgba(255, 255, 255, 0.7); 
@@ -49,64 +47,64 @@
     }
     .nav-btn.active { opacity: 1; background: rgba(0,0,0,0.05); }
 
-    /* OG BLUR: High-Key Fog Effect */
+    /* CLEAN REVEAL STYLES */
     .reveal { 
       opacity: 0; 
-      filter: blur(40px); 
-      transform: scale(0.98) translateY(20px);
+      filter: blur(20px); 
+      transform: translateY(20px);
       will-change: opacity, filter, transform;
     }
 
-    /* GLOBAL HIG CONTAINER - 980px Standard */
+    /* GLOBAL CONTAINER */
     .hig-container { 
       max-width: 980px; 
       margin: 0 auto; 
-      padding: 0 22px 40vh; 
+      padding: 0 22px 50vh; 
     }
 
     /* --- HOME TAB --- */
     .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+    
     .hero h1 { 
-        font-size: clamp(40px, 8vw, 90px); 
-        font-weight: 700; 
-        letter-spacing: -0.05em; 
-        color: var(--fg);
+      font-size: clamp(48px, 10vw, 110px); 
+      font-weight: 700; 
+      letter-spacing: -0.04em; 
+      color: var(--fg);
+      font-feature-settings: "liga" 0, "clig" 0, "kern" 1;
+      text-rendering: optimizeLegibility;
+      line-height: 1;
     }
 
     .bento-grid { 
-        display: grid; 
-        grid-template-columns: repeat(13, 1fr); 
-        grid-auto-rows: 160px; 
-        gap: 20px; 
+      display: grid; 
+      grid-template-columns: repeat(13, 1fr); 
+      grid-auto-rows: 160px; 
+      gap: 24px; 
     }
     
     .card { 
-        background: var(--card); 
-        border-radius: 24px; 
-        padding: 32px; 
-        display: flex; 
-        flex-direction: column; 
-        justify-content: flex-end; 
-        transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1), background 0.3s;
-        border: 1px solid transparent;
+      background: var(--card); 
+      border-radius: 28px; 
+      padding: 32px; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: flex-end; 
     }
-    .card:hover { transform: scale(1.01); background: #f0f0f2; }
     .c-8 { grid-column: span 8; }
     .c-5 { grid-column: span 5; }
     .r-3 { grid-row: span 3; }
     .r-2 { grid-row: span 2; }
 
     .tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sub); margin-bottom: 12px; font-family: var(--font-mono); }
-    .card h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; color: #111; }
-    .card p { color: var(--sub); font-size: 14px; line-height: 1.5; }
+    .card h3 { font-size: 22px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .card p { color: var(--sub); font-size: 15px; line-height: 1.5; }
 
     /* --- ABOUT TAB --- */
-    .about-section { padding-top: 160px; }
+    .about-section { padding-top: 20vh; }
     
     .about-header { 
       border-bottom: 1px solid #d2d2d7; 
       padding-bottom: 44px; 
-      margin-bottom: 0; 
     }
     .about-header h1 { font-size: 48px; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 12px; }
     .about-header p { font-size: 22px; color: var(--sub); line-height: 1.3; max-width: 700px; }
@@ -114,7 +112,7 @@
     .hig-row { 
       display: grid; 
       grid-template-columns: 200px 1fr; 
-      padding: 60px 0; 
+      padding: 80px 0; 
       border-bottom: 1px solid #f2f2f2; 
     }
     .hig-row:last-child { border-bottom: none; }
@@ -130,8 +128,8 @@
     }
 
     .hig-content h2 { font-size: 32px; font-weight: 600; margin-bottom: 20px; letter-spacing: -0.02em; }
-    .hig-content p { font-size: 18px; color: var(--fg); margin-bottom: 20px; line-height: 1.5; }
-    .hig-content .sub-p { font-size: 16px; color: var(--sub); margin-top: -10px; }
+    .hig-content p { font-size: 19px; color: var(--fg); margin-bottom: 20px; line-height: 1.5; }
+    .hig-content .sub-p { font-size: 17px; color: var(--sub); margin-top: -10px; }
     .highlight { color: var(--fg); font-weight: 600; }
 
     .tab-content { display: none; }
@@ -169,7 +167,7 @@
           <div class="card c-5 r-2 reveal">
             <span class="tag">3D Design</span>
             <h3>Advanced Blender</h3>
-            <p>Translating complex mechanical designs into digital geometry that feels weighted and functional.</p>
+            <p>Translating complex mechanical designs into digital geometry that feels weighted, functional, and grounded in physical reality.</p>
           </div>
           <div class="card c-5 r-3 reveal">
             <span class="tag">Production</span>
@@ -179,7 +177,7 @@
           <div class="card c-8 r-2 reveal">
             <span class="tag">Experimental</span>
             <h3>The Log</h3>
-            <p>Pushing hardware past intended limits. From kernel-level Hackintosh patches to electrical load experiments.</p>
+            <p>Pushing hardware past intended limits. From kernel-level Hackintosh patches to electrical load experiments that redefine "learning by breaking."</p>
           </div>
         </div>
       </div>
@@ -189,29 +187,32 @@
       <div class="hig-container about-section">
         <div class="about-header reveal">
           <h1>Guidelines</h1>
-          <p>Fusing engineering with creative vision to build the future of technical artistry.</p>
+          <p>Architecting experiences where technical complexity and aesthetic beauty are inseparable.</p>
         </div>
+
         <div class="hig-row reveal">
           <div class="hig-label">Foundation</div>
           <div class="hig-content">
             <h2>The Narrative</h2>
             <p>Born on <strong>April 27, 2010</strong>. My perspective as a creator was born in <span class="highlight">Lucknow</span>, starting with early childhood at <span class="highlight">The Tree House</span>.</p>
-            <p class="sub-p">The years between 2014 and 2021 at <span class="highlight">St. Fidelis College</span> shaped my academic discipline, transitioning me from a consumer of digital content to a student of its architecture.</p>
+            <p class="sub-p">The years between 2014 and 2021 at <span class="highlight">St. Fidelis College</span> shaped my academic discipline, transitioning me from a student of digital architecture.</p>
             <p class="sub-p">Currently navigating the intersection of engineering and design at <span class="highlight">Sunbeam School</span>, Robertsganj.</p>
           </div>
         </div>
+
         <div class="hig-row reveal">
           <div class="hig-label">Philosophy</div>
           <div class="hig-content">
             <h2>Core Logic</h2>
-            <p>I view code as the skeletal system of any digital experience—requiring flexibility and strength. Whether in <span class="highlight">C#</span> or <span class="highlight">Blender</span>, my approach is <strong>logic-first</strong>.</p>
+            <p>I view code as the skeletal system of any digital experience—requiring flexibility and strength. My approach is <strong>logic-first</strong>, ensuring assets are grounded in physical reality.</p>
           </div>
         </div>
+
         <div class="hig-row reveal">
           <div class="hig-label">Anomalies</div>
           <div class="hig-content">
             <h2>Experimental Log</h2>
-            <p>Hardware projects that push environments to their limits. Architecting functional <span class="highlight">Hackintosh</span> systems and diving into kernel patches to force software into spaces it was never meant to occupy.</p>
+            <p>Hardware projects that push environments to their limits. Architecting functional <span class="highlight">Hackintosh</span> systems and diving into kernel patches to force software into unintended spaces.</p>
           </div>
         </div>
       </div>
@@ -224,15 +225,20 @@
     function initAnimations() {
       ScrollTrigger.getAll().forEach(t => t.kill());
       
+      // Removed scrub and cinema lens effect
+      // Elements now fade in and stay visible
       document.querySelectorAll('.reveal').forEach((el) => {
         gsap.to(el, {
           scrollTrigger: {
             trigger: el,
-            start: "top 95%", 
-            end: "bottom 5%", 
-            toggleActions: "play reverse play reverse",
+            start: "top 90%", 
+            toggleActions: "play none none reverse", // Plays once on scroll down, reverses on scroll up
           },
-          opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.8, ease: "expo.out"
+          opacity: 1, 
+          filter: "blur(0px)", 
+          y: 0, 
+          duration: 0.8,
+          ease: "power2.out"
         });
       });
     }
@@ -244,10 +250,7 @@
       btn.addEventListener('click', () => {
         buttons.forEach(b => b.classList.toggle('active', b === btn));
         tabs.forEach(t => t.classList.toggle('active', t.id === btn.dataset.target));
-        
-        // Jump to top immediately when switching tabs
         window.scrollTo(0, 0);
-        
         setTimeout(() => { 
           initAnimations(); 
           ScrollTrigger.refresh(); 
