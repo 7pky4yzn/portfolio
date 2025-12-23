@@ -7,19 +7,19 @@
 
   <style>
     :root {
-      --bg-color: #050505;
-      --text-color: #f5f5f7;
-      --subtext-color: #a1a1a6;
-      --nav-bg: rgba(20, 20, 20, 0.6);
-      --card-bg: rgba(255, 255, 255, 0.03);
+      --bg-color: #ffffff;
+      --text-color: #1d1d1f;
+      --subtext-color: #86868b;
+      --nav-bg: rgba(250, 250, 252, 0.8);
+      --card-bg: #f5f5f7;
       --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
       --transition-speed: 1.4s;
       --spring-easing: cubic-bezier(0.16, 1, 0.3, 1);
       --max-width-grid: 1100px;
-      --color-dev: #2997ff;
+      --color-dev: #0071e3;
       --color-design: #af52de;
       --color-media: #ff3b30;
-      --color-experiment: #ff9f0a;
+      --color-experiment: #f56300;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,108 +28,88 @@
       min-height: 100%;
       background-color: var(--bg-color);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(41, 151, 255, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(175, 82, 222, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+        radial-gradient(circle at 50% 0%, rgba(0, 113, 227, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(175, 82, 222, 0.03) 0%, transparent 40%);
       background-attachment: fixed;
       color: var(--text-color);
       font-family: var(--font-main);
       -webkit-font-smoothing: antialiased;
       scroll-behavior: smooth;
-      overflow-x: hidden; /* Prevent horizontal scroll */
     }
 
-    header { position: fixed; left: 50%; transform: translateX(-50%); top: 20px; z-index: 1000; width: auto; }
-    nav { background: var(--nav-bg); backdrop-filter: blur(30px); padding: 6px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 4px; }
-    .nav-btn { background: transparent; border: 0; color: #fff; padding: 10px 20px; font-size: 13px; font-weight: 500; border-radius: 40px; cursor: pointer; opacity: .4; transition: 0.3s; white-space: nowrap; }
-    .nav-btn.active { background: rgba(255, 255, 255, 0.1); opacity: 1; }
+    header { position: fixed; left: 50%; transform: translateX(-50%); top: 40px; z-index: 1000; }
+    nav { background: var(--nav-bg); backdrop-filter: blur(20px); padding: 8px; border-radius: 50px; border: 1px solid rgba(0, 0, 0, 0.05); display: flex; gap: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.04); }
+    .nav-btn { background: transparent; border: 0; color: var(--text-color); padding: 8px 22px; font-size: 13px; font-weight: 500; border-radius: 40px; cursor: pointer; opacity: .4; transition: 0.3s; }
+    .nav-btn.active { background: #fff; opacity: 1; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 
     .reveal { 
       opacity: 0; 
       filter: blur(20px); 
-      transform: translateY(30px) scale(0.98); 
+      transform: translateY(40px) scale(0.98); 
       transition: all var(--transition-speed) var(--spring-easing); 
     }
     .reveal.active { opacity: 1; filter: blur(0px); transform: translateY(0) scale(1); }
-    .reveal.out-focus { filter: blur(30px); opacity: 0; transform: translateY(-40px) scale(0.95); }
+    .reveal.out-focus { filter: blur(30px); opacity: 0; transform: translateY(-60px) scale(0.95); }
 
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* HOME STYLES */
-    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 20px; }
+    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; }
     .hero h1 { 
-      font-size: clamp(40px, 15vw, 90px); 
+      font-size: clamp(48px, 12vw, 90px); 
       font-weight: 700; 
       letter-spacing: -.05em; 
-      text-align: center;
-      background: linear-gradient(180deg, #fff 60%, rgba(255,255,255,0.2)); 
+      background: linear-gradient(180deg, #1d1d1f 60%, #86868b); 
       -webkit-background-clip: text; 
       -webkit-text-fill-color: transparent; 
     }
     
-    .projects-section { max-width: var(--max-width-grid); margin: 0 auto; padding: 0 24px 20vh 24px; }
-    .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; grid-auto-rows: minmax(240px, auto); }
+    .projects-section { max-width: var(--max-width-grid); margin: 0 auto; padding: 0 24px 30vh 24px; }
+    .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; grid-auto-rows: 280px; }
     
     .bento-card { 
       background: var(--card-bg); 
-      border: 1px solid rgba(255, 255, 255, 0.06); 
-      border-radius: 28px; 
-      padding: 32px; 
+      border: 1px solid rgba(0, 0, 0, 0.02); 
+      border-radius: 32px; 
+      padding: 40px; 
       display: flex; 
       flex-direction: column; 
-      transition: transform 0.6s var(--spring-easing), background 0.6s, box-shadow 0.6s, border 0.6s;
+      transition: transform 0.6s var(--spring-easing), background 0.6s, box-shadow 0.6s;
     }
     .bento-card:hover { 
       transform: scale(1.02); 
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #fff;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.06);
     }
 
     .large { grid-column: span 2; grid-row: span 2; justify-content: flex-end; }
     .wide { grid-column: span 2; justify-content: flex-end; }
-    .bento-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; color: #fff; }
+    .bento-card h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
     .bento-card p { color: var(--subtext-color); font-size: 14px; line-height: 1.5; }
 
     .tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; margin-bottom: 16px; display: inline-block; padding: 4px 10px; border-radius: 6px; width: fit-content; }
-    .tag.dev { color: var(--color-dev); background: rgba(41, 151, 255, 0.1); }
+    .tag.dev { color: var(--color-dev); background: rgba(0, 113, 227, 0.1); }
     .tag.design { color: var(--color-design); background: rgba(175, 82, 222, 0.1); }
     .tag.media { color: var(--color-media); background: rgba(255, 59, 48, 0.1); }
+    .tag.experiment { color: var(--color-experiment); background: rgba(245, 99, 0, 0.1); }
 
-    /* DETAILED NARRATIVE STYLES */
-    .about-view { padding-top: 15vh; }
-    .section-container { max-width: 850px; margin: 0 auto; padding: 0 24px 8rem 24px; }
-    .section-container h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--subtext-color); margin-bottom: 30px; font-weight: 600; }
+    .about-view { padding-top: 25vh; }
+    .section-container { max-width: 850px; margin: 0 auto; padding: 0 32px 14rem 32px; }
+    .section-container h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--subtext-color); margin-bottom: 40px; font-weight: 600; }
     
-    .narrative-title { font-size: clamp(24px, 6vw, 38px); font-weight: 700; color: #fff; margin-bottom: 24px; letter-spacing: -0.02em; line-height: 1.2; }
-    .narrative-p { 
-      font-size: clamp(16px, 4vw, 18px); 
-      line-height: 1.7; 
-      color: var(--subtext-color); 
-      margin-bottom: 40px; 
-    }
-    .highlight { color: #fff; font-weight: 500; }
-    .tag.experiment { color: var(--color-experiment); background: rgba(255, 159, 10, 0.1); }
-    .deep-bottom { padding-bottom: 30vh; }
+    .narrative-title { font-size: 38px; font-weight: 700; color: var(--text-color); margin-bottom: 32px; letter-spacing: -0.02em; line-height: 1.2; }
+    .narrative-p { font-size: 18px; line-height: 1.8; color: var(--subtext-color); margin-bottom: 48px; }
+    .highlight { color: var(--text-color); font-weight: 500; }
+    .deep-bottom { padding-bottom: 50vh; }
 
-    /* RESPONSIVE BREAKPOINTS */
-    @media (max-width: 1024px) {
-      .bento-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-      .large, .wide { grid-column: span 2; grid-row: span 1; }
-    }
-
-    @media (max-width: 600px) {
-      header { top: 15px; width: 90%; display: flex; justify-content: center; }
-      nav { width: 100%; justify-content: center; }
-      .nav-btn { padding: 8px 15px; flex: 1; text-align: center; }
-      
-      .bento-grid { grid-template-columns: 1fr; }
-      .large, .wide { grid-column: span 1; }
-      .bento-card { padding: 24px; border-radius: 24px; min-height: 200px; }
-      
-      .projects-section { padding: 0 20px 15vh 20px; }
-      .about-view { padding-top: 120px; }
-      .section-container { padding-bottom: 5rem; }
+    @media (max-width: 900px) {
+      header { top: 20px; }
+      .bento-grid { grid-template-columns: 1fr; grid-auto-rows: 300px; gap: 24px; }
+      .large, .wide { grid-column: span 1; grid-row: span 1; }
+      .hero h1 { font-size: 54px; text-align: center; }
+      .narrative-title { font-size: 28px; }
+      .narrative-p { font-size: 17px; }
+      .about-view { padding-top: 15vh; }
     }
   </style>
 </head>
@@ -162,13 +142,13 @@
         <h2 class="reveal">Background</h2>
         <h3 class="reveal narrative-title">The Foundation in Lucknow</h3>
         <p class="reveal narrative-p">
-          My perspective as a creator was born in <span class="highlight">Lucknow</span>, a city that provided the backdrop for my earliest encounters with technology. Born on April 27, 2010, I spent my early childhood at <span class="highlight">The Tree House</span>, where the first seeds of curiosity were planted.
+          My perspective as a creator was born in <span class="highlight">Lucknow</span>, a city that provided the backdrop for my earliest encounters with technology. Born on April 27, 2010, I spent my early childhood at <span class="highlight">The Tree House</span>, where the first seeds of curiosity were planted. This environment fostered a natural inclination toward understanding the mechanics of the world around me, setting the stage for a life defined by technical and artistic inquiry.
         </p>
         <p class="reveal narrative-p">
-          The years between 2014 and 2021 at <span class="highlight">St. Fidelis College</span> were essential in shaping my academic discipline. This period was marked by a steady transition from being a consumer of digital content to becoming a student of its architecture.
+          The years between 2014 and 2021 at <span class="highlight">St. Fidelis College</span> were essential in shaping my academic discipline. It was here that I began to move beyond simple curiosity and started exploring the digital landscape as a serious medium. This period was marked by a steady transition from being a consumer of digital content to becoming a student of its architecture, learning the importance of structure, logic, and precision in everything I built.
         </p>
         <p class="reveal narrative-p">
-          Currently, I am navigating the intersection of engineering and design at <span class="highlight">Sunbeam School</span> in Robertsganj. This chapter is focused on the rigorous application of physics and mathematics to creative problems.
+          Currently, I am navigating the intersection of engineering and design at <span class="highlight">Sunbeam School</span> in Robertsganj. This current chapter is focused on the rigorous application of physics and mathematics to creative problems. By blending school-level engineering principles with professional-grade digital tools, I am working toward a future where technical complexity and aesthetic beauty are inseparable.
         </p>
       </article>
 
@@ -176,17 +156,17 @@
         <h2 class="reveal">The Stack</h2>
         <h3 class="reveal narrative-title">C# and Systems Logic</h3>
         <p class="reveal narrative-p">
-          My approach to programming is rooted in the architecture of <span class="highlight">C#</span>. I view code as the skeletal system of any digital experience, requiring both flexibility and strength.
+          My approach to programming is rooted in the architecture of <span class="highlight">C#</span>. I view code as the skeletal system of any digital experience, requiring both flexibility and strength. I specialize in building modular engine components and systemic gameplay modules that can scale without friction. This logical foundation extends to Python and Lua, allowing me to bridge the gap between pure data and interactive systems.
         </p>
 
         <h3 class="reveal narrative-title">Advanced 3D in Blender</h3>
         <p class="reveal narrative-p">
-          In the realm of <span class="highlight">Blender</span>, my work focuses on the philosophy of hard surface modeling. I prioritize clean topology and procedural workflows.
+          In the realm of <span class="highlight">Blender</span>, my work focuses on the philosophy of hard surface modeling. I prioritize clean topology and procedural workflows, ensuring that every asset is optimized for real-time rendering without sacrificing visual fidelity. I enjoy the challenge of translating complex mechanical designs into digital geometry that feels weighted, functional, and grounded in physical reality.
         </p>
 
-        <h3 class="reveal narrative-title">Visual Direction</h3>
+        <h3 class="reveal narrative-title">Visual Direction and Cinematography</h3>
         <p class="reveal narrative-p">
-          I apply professional <span class="highlight">cinematography</span> techniques to every frame I render, directing viewer attention through the physics of light.
+          I apply professional <span class="highlight">cinematography</span> techniques to every frame I render. By understanding the physics of light and the psychology of camera movement, I can direct a viewer's attention and evoke specific emotional responses. This involves a deep study of narrative lighting, focal lengths, and composition, ensuring that the visual story is as compelling as the technical execution.
         </p>
       </article>
 
@@ -194,10 +174,11 @@
         <h2 class="reveal">Anomalies</h2>
         <h3 class="reveal narrative-title">The Experimental Log</h3>
         <p class="reveal narrative-p">
-          One of my most persistent challenges was <span class="highlight">turning an aging laptop into a functioning Hackintosh</span>, involving a deep dive into kernel patches and driver kexts.
+          Beyond the structured world of design pipelines and game architecture, I have always been driven by a "break it to understand it" mentality. This often manifests in hardware projects that push my environment to its limits. One of my most persistent challenges was <span class="highlight">turning an aging laptop into a functioning Hackintosh</span>. This process involved a deep dive into kernel patches and driver kexts, fighting against hardware limitations to force an operating system into a space it was never meant to occupy.
         </p>
+
         <p class="reveal narrative-p">
-          There was a notable instance where my curiosity regarding electrical load led to <span class="highlight">short circuiting my entire room</span>. It served as a practical introduction to hardware engineering.
+          Not every experiment has been a quiet technical success. There was a notable instance where my curiosity regarding electrical load led to <span class="highlight">short circuiting my entire room</span>. While it was a momentarily startling event, it served as a very practical introduction to the fundamental laws of electricity and the critical importance of safety protocols in hardware engineering.
         </p>
       </article>
 
@@ -205,11 +186,12 @@
         <h2 class="reveal">Experience</h2>
         <h3 class="reveal narrative-title">Technical Artistry</h3>
         <p class="reveal narrative-p">
-          Refining the pipeline between C# logic and 3D asset creation, optimizing high-end visuals for interactive performance.
+          The years between 2021 and 2023 marked my full immersion into <span class="highlight">Technical Art</span>. I dedicated this time to refining the pipeline between C# logic and 3D asset creation. It was during this phase that I realized my true potential lay in the synthesis of the developer and the artist.
         </p>
+
         <h3 class="reveal narrative-title">Creative Direction</h3>
         <p class="reveal narrative-p">
-          Currently architecting entire experiences, merging cinematography with technical engineering to push the boundaries of storytelling.
+          Currently, my focus is on <span class="highlight">Creative Direction</span>. I am no longer just building components, I am architecting entire experiences. My goal is to continue exploring the limits of what is possible when we treat code, light, and sound as a single artistic medium.
         </p>
       </article>
     </section>
