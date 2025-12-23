@@ -7,19 +7,19 @@
 
   <style>
     :root {
-      --bg-color: #ffffff;
-      --text-color: #1d1d1f;
-      --subtext-color: #6e6e73;
-      --nav-bg: rgba(255, 255, 255, 0.7);
-      --card-bg: rgba(0, 0, 0, 0.03);
-      --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+      --bg-color: #050505;
+      --text-color: #f5f5f7;
+      --subtext-color: #86868b;
+      --nav-bg: rgba(22, 22, 23, 0.8);
+      --card-bg: #121212;
+      --card-border: rgba(255, 255, 255, 0.1);
+      --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
       --transition-speed: 1.4s;
       --spring-easing: cubic-bezier(0.16, 1, 0.3, 1);
       --max-width-grid: 1100px;
-      --color-dev: #0071e3;
+      --color-dev: #2997ff;
       --color-design: #af52de;
       --color-media: #ff3b30;
-      --color-experiment: #f56300;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,96 +27,136 @@
     html, body { 
       min-height: 100%;
       background-color: var(--bg-color);
-      /* SOFT NESTED LIGHT GRADIENTS FOR WHITE THEME */
-      background-image: 
-        radial-gradient(circle at 20% 20%, rgba(0, 113, 227, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 80% 10%, rgba(175, 82, 222, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 50% 80%, rgba(255, 59, 48, 0.03) 0%, transparent 50%);
-      background-attachment: fixed;
       color: var(--text-color);
       font-family: var(--font-main);
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; /* Prevent horizontal scroll */
       scroll-behavior: smooth;
     }
 
-    /* NAVIGATION - LIGHT BLUR */
-    header { position: fixed; left: 50%; transform: translateX(-50%); top: 40px; z-index: 1000; }
-    nav { background: var(--nav-bg); backdrop-filter: blur(30px); padding: 8px; border-radius: 50px; border: 1px solid rgba(0, 0, 0, 0.08); display: flex; gap: 8px; box-shadow: 0 4px 30px rgba(0,0,0,0.03); }
-    .nav-btn { background: transparent; border: 0; color: var(--text-color); padding: 8px 22px; font-size: 13px; font-weight: 500; border-radius: 40px; cursor: pointer; opacity: .4; transition: 0.3s; }
-    .nav-btn.active { background: rgba(0, 0, 0, 0.05); opacity: 1; }
+    /* NAVIGATION */
+    header { 
+      position: fixed; 
+      left: 0; 
+      right: 0; 
+      top: 20px; 
+      z-index: 1000; 
+      display: flex; 
+      justify-content: center; 
+      padding: 0 20px;
+    }
+    nav { 
+      background: var(--nav-bg); 
+      backdrop-filter: blur(20px); 
+      -webkit-backdrop-filter: blur(20px);
+      padding: 6px; 
+      border-radius: 50px; 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+      display: flex; 
+      gap: 4px; 
+    }
+    .nav-btn { 
+      background: transparent; 
+      border: 0; 
+      color: #fff; 
+      padding: 10px 20px; 
+      font-size: 14px; 
+      font-weight: 500; 
+      border-radius: 40px; 
+      cursor: pointer; 
+      opacity: .4; 
+      transition: 0.3s; 
+      white-space: nowrap;
+    }
+    .nav-btn.active { background: rgba(255, 255, 255, 0.1); opacity: 1; }
 
     /* REVEAL SYSTEM */
     .reveal { 
       opacity: 0; 
-      filter: blur(20px); 
-      transform: translateY(40px) scale(0.98); 
+      filter: blur(15px); 
+      transform: translateY(30px); 
       transition: all var(--transition-speed) var(--spring-easing); 
     }
-    .reveal.active { opacity: 1; filter: blur(0px); transform: translateY(0) scale(1); }
-    .reveal.out-focus { filter: blur(30px); opacity: 0; transform: translateY(-60px) scale(0.95); }
+    .reveal.active { opacity: 1; filter: blur(0px); transform: translateY(0); }
 
-    .tab-content { display: none; }
+    .tab-content { display: none; width: 100%; }
     .tab-content.active { display: block; }
 
-    /* HOME STYLES */
-    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; }
+    /* HERO */
+    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 20px; text-align: center; }
     .hero h1 { 
-      font-size: clamp(48px, 12vw, 90px); 
+      font-size: clamp(40px, 15vw, 90px); 
       font-weight: 700; 
       letter-spacing: -.05em; 
-      background: linear-gradient(180deg, #1d1d1f 60%, #86868b 100%); 
-      -webkit-background-clip: text; 
-      -webkit-text-fill-color: transparent; 
+      color: #fff;
+      line-height: 1;
     }
     
-    .projects-section { max-width: var(--max-width-grid); margin: 0 auto; padding: 0 24px 30vh 24px; }
-    .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; grid-auto-rows: 280px; }
+    /* BENTO GRID */
+    .projects-section { 
+      max-width: var(--max-width-grid); 
+      margin: 0 auto; 
+      padding: 0 20px 20vh 20px; 
+    }
+    .bento-grid { 
+      display: grid; 
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 20px; 
+      grid-auto-rows: minmax(240px, auto); 
+    }
     
     .bento-card { 
       background: var(--card-bg); 
-      border: 1px solid rgba(0, 0, 0, 0.04); 
-      border-radius: 32px; 
-      padding: 40px; 
+      border: 1px solid var(--card-border); 
+      border-radius: 24px; 
+      padding: 30px; 
       display: flex; 
       flex-direction: column; 
-      transition: transform 0.6s var(--spring-easing), background 0.6s, box-shadow 0.6s, border 0.6s;
-    }
-    .bento-card:hover { 
-      transform: scale(1.035); 
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+      justify-content: flex-end;
+      transition: transform 0.6s var(--spring-easing), background 0.6s;
     }
 
-    .large { grid-column: span 2; grid-row: span 2; justify-content: flex-end; }
-    .wide { grid-column: span 2; justify-content: flex-end; }
-    .bento-card h3 { font-size: 22px; font-weight: 600; margin-bottom: 12px; color: var(--text-color); }
+    .large { grid-column: span 2; grid-row: span 2; }
+    .wide { grid-column: span 2; }
+
+    .bento-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; color: #fff; }
     .bento-card p { color: var(--subtext-color); font-size: 14px; line-height: 1.5; }
 
-    .tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; margin-bottom: 16px; display: inline-block; padding: 4px 10px; border-radius: 6px; width: fit-content; }
-    .tag.dev { color: var(--color-dev); background: rgba(0, 113, 227, 0.08); }
-    .tag.design { color: var(--color-design); background: rgba(175, 82, 222, 0.08); }
-    .tag.media { color: var(--color-media); background: rgba(255, 59, 48, 0.08); }
+    .tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: inline-block; padding: 4px 10px; border-radius: 6px; width: fit-content; }
+    .tag.dev { color: var(--color-dev); background: rgba(41, 151, 255, 0.1); }
+    .tag.design { color: var(--color-design); background: rgba(175, 82, 222, 0.1); }
+    .tag.media { color: var(--color-media); background: rgba(255, 59, 48, 0.1); }
 
-    /* ABOUT STYLES */
-    .about-view { padding-top: 25vh; }
-    .section-container { max-width: 850px; margin: 0 auto; padding: 0 32px 14rem 32px; }
-    .section-container h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--subtext-color); margin-bottom: 40px; font-weight: 600; }
+    /* ABOUT VIEW */
+    .about-view { padding-top: 120px; }
+    .section-container { max-width: 800px; margin: 0 auto; padding: 0 24px 8rem 24px; }
+    .section-container h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--subtext-color); margin-bottom: 24px; font-weight: 600; }
     
-    .narrative-title { font-size: 38px; font-weight: 700; color: var(--text-color); margin-bottom: 32px; letter-spacing: -0.02em; line-height: 1.2; }
-    .narrative-p { 
-      font-size: 18px; 
-      line-height: 1.8; 
-      color: var(--subtext-color); 
-      margin-bottom: 48px; 
+    .narrative-title { font-size: clamp(28px, 8vw, 38px); font-weight: 700; color: #fff; margin-bottom: 20px; line-height: 1.2; }
+    .narrative-p { font-size: 17px; line-height: 1.7; color: var(--subtext-color); margin-bottom: 32px; }
+    .highlight { color: #fff; font-weight: 500; }
+    
+    .deep-bottom { padding-bottom: 30vh; }
+
+    /* MOBILE ADJUSTMENTS */
+    @media (max-width: 850px) {
+      .bento-grid { 
+        grid-template-columns: 1fr; /* Single column for mobile */
+        grid-auto-rows: auto;
+      }
+      .large, .wide { grid-column: span 1; grid-row: span 1; }
+      .bento-card { padding: 24px; min-height: 200px; }
+      .hero h1 { font-size: 56px; }
+      .about-view { padding-top: 100px; }
+      .section-container { padding-bottom: 5rem; }
     }
-    .highlight { color: var(--text-color); font-weight: 600; }
-    
-    .deep-bottom { padding-bottom: 50vh; }
 
-    @media (max-width:900px) {
-      .bento-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-      .large, .wide { grid-column: span 2; }
+    @media (hover: hover) {
+      .bento-card:hover { 
+        transform: scale(1.02); 
+        background: #1a1a1a;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
     }
   </style>
 </head>
@@ -132,65 +172,71 @@
   <main>
     <section id="home-tab" class="tab-content active">
       <section class="hero"><h1 class="reveal">Ishit Singh.</h1></section>
+      
       <section class="projects-section">
         <div class="bento-grid">
-          <div class="bento-card large reveal"><span class="tag dev">Systems</span><h3>Game Architecture</h3><p>Systemic gameplay modules and modular engine components in C#.</p></div>
-          <div class="bento-card reveal"><span class="tag design">3D Modeling</span><h3>Blender Lab</h3><p>Hard surface modeling and procedural generation.</p></div>
-          <div class="bento-card reveal"><span class="tag media">Vision</span><h3>Cinematography</h3><p>Narrative storytelling and cinematic lighting design.</p></div>
-          <div class="bento-card wide reveal"><span class="tag dev">Web</span><h3>Fluid Interfaces</h3><p>High-fidelity web experiences with TypeScript and React.</p></div>
-          <div class="bento-card reveal"><span class="tag design">Materials</span><h3>Surface Design</h3><p>Texture work in Substance Painter for asset integration.</p></div>
-          <div class="bento-card reveal"><span class="tag media">Sound</span><h3>Atmosphere</h3><p>Music production and sound design for digital environments.</p></div>
+          <div class="bento-card large reveal">
+            <span class="tag dev">Systems</span>
+            <h3>Game Architecture</h3>
+            <p>Systemic gameplay modules and modular engine components in C#.</p>
+          </div>
+          <div class="bento-card reveal">
+            <span class="tag design">3D Modeling</span>
+            <h3>Blender Lab</h3>
+            <p>Hard surface modeling and procedural generation.</p>
+          </div>
+          <div class="bento-card reveal">
+            <span class="tag media">Vision</span>
+            <h3>Cinematography</h3>
+            <p>Narrative storytelling and cinematic lighting design.</p>
+          </div>
+          <div class="bento-card wide reveal">
+            <span class="tag dev">Web</span>
+            <h3>Fluid Interfaces</h3>
+            <p>High-fidelity web experiences with TypeScript and React.</p>
+          </div>
+          <div class="bento-card reveal">
+            <span class="tag design">Materials</span>
+            <h3>Surface Design</h3>
+            <p>Texture work in Substance Painter for asset integration.</p>
+          </div>
+          <div class="bento-card reveal">
+            <span class="tag media">Sound</span>
+            <h3>Atmosphere</h3>
+            <p>Music production and sound design for digital environments.</p>
+          </div>
         </div>
       </section>
     </section>
 
     <section id="about-tab" class="tab-content about-view">
-      
       <article class="section-container">
         <h2 class="reveal">Background</h2>
         <h3 class="reveal narrative-title">The Foundation in Lucknow</h3>
-        <p class="reveal narrative-p">
-          My perspective as a creator was born in <span class="highlight">Lucknow</span>, a city that provided the backdrop for my earliest encounters with technology. Born on April 27, 2010, I spent my early childhood at <span class="highlight">The Tree House</span>, where the first seeds of curiosity were planted. This environment fostered a natural inclination toward understanding the mechanics of the world around me, setting the stage for a life defined by technical and artistic inquiry.
-        </p>
-        <p class="reveal narrative-p">
-          The years between 2014 and 2021 at <span class="highlight">St. Fidelis College</span> were essential in shaping my academic discipline. It was here that I began to move beyond simple curiosity and started exploring the digital landscape as a serious medium. This period was marked by a steady transition from being a consumer of digital content to becoming a student of its architecture.
-        </p>
+        <p class="reveal narrative-p">Born on April 27, 2010, I spent my early childhood at <span class="highlight">The Tree House</span>, where my initial curiosity for how things are constructed began. My subsequent years at <span class="highlight">St. Fidelis College</span> from 2014 to 2021 provided a disciplined framework for my digital exploration. Currently, I am expanding my knowledge of engineering and systems at <span class="highlight">Sunbeam School</span> in Robertsganj.</p>
       </article>
 
       <article class="section-container">
         <h2 class="reveal">The Stack</h2>
         <h3 class="reveal narrative-title">C# and Systems Logic</h3>
-        <p class="reveal narrative-p">
-          My approach to programming is rooted in the architecture of <span class="highlight">C#</span>. I view code as the skeletal system of any digital experience, requiring both flexibility and strength. I specialize in building modular engine components and systemic gameplay modules that can scale without friction.
-        </p>
+        <p class="reveal narrative-p">I utilize <span class="highlight">C#</span> to architect modular digital systems, focusing on clean, scalable code for game engines and interactive environments. My logic-first approach ensures functionality is never sacrificed for aesthetic appeal.</p>
+        
         <h3 class="reveal narrative-title">Advanced 3D in Blender</h3>
-        <p class="reveal narrative-p">
-          In the realm of <span class="highlight">Blender</span>, my work focuses on the philosophy of hard surface modeling. I prioritize clean topology and procedural workflows, ensuring that every asset is optimized for real-time rendering without sacrificing visual fidelity.
-        </p>
+        <p class="reveal narrative-p">In <span class="highlight">Blender</span>, I focus on hard surface modeling and procedural generation. By maintaining strict topological standards, I create assets that are ready for real-time integration.</p>
       </article>
 
       <article class="section-container">
         <h2 class="reveal">Anomalies</h2>
-        <h3 class="reveal narrative-title">The Experimental Log</h3>
-        <p class="reveal narrative-p">
-          Beyond the structured world of design pipelines, I have always been driven by a "break it to understand it" mentality. One of my most persistent challenges was <span class="highlight">turning an aging laptop into a functioning Hackintosh</span>, fighting against hardware limitations to force an operating system into a space it was never meant to occupy.
-        </p>
-        <p class="reveal narrative-p">
-          Not every experiment has been a quiet technical success. There was a notable instance where my curiosity regarding electrical load led to <span class="highlight">short circuiting my entire room</span>. While it was a momentarily startling event, it served as a very practical introduction to the fundamental laws of electricity.
-        </p>
-        <p class="reveal narrative-p">
-          I have also spent time building custom hardware, such as <span class="highlight">assembling a functional MP3 player</span> from scratch. Projects like these allow me to appreciate the tactile side of technology, stepping away from the screen to work with raw, physical circuit boards.
-        </p>
+        <h3 class="reveal narrative-title">Experimental Hardware</h3>
+        <p class="reveal narrative-p">I have a history of pushing hardware past its intended limits, such as <span class="highlight">converting an old laptop into a functioning Hackintosh</span>. This required a deep understanding of kernel-level software.</p>
+        <p class="reveal narrative-p">My hands-on approach sometimes leads to unpredictable results, including a memorable incident where I <span class="highlight">short circuited my room</span> while testing electrical loads. I have also built custom devices, including a <span class="highlight">functional MP3 player</span>, to better understand physical circuits.</p>
       </article>
 
       <article class="section-container deep-bottom">
         <h2 class="reveal">Experience</h2>
         <h3 class="reveal narrative-title">Creative Direction</h3>
-        <p class="reveal narrative-p">
-          Currently, my focus is on <span class="highlight">Creative Direction</span>. I am no longer just building components, I am architecting entire experiences. By merging my background in cinematography with my technical engineering skills, I am building a portfolio of work that pushes the boundaries of digital storytelling.
-        </p>
+        <p class="reveal narrative-p">Currently, my focus is on <span class="highlight">Creative Direction</span>, where I synthesize cinematography, technical art, and systems architecture to build cohesive digital narratives.</p>
       </article>
-
     </section>
   </main>
 
@@ -204,7 +250,9 @@
         tabs.forEach(t => t.classList.toggle('active', t === targetTab));
         panels.forEach(p => p.classList.toggle('active', p.id === targetId));
         window.scrollTo({ top: 0 });
-        setTimeout(initObserver, 100); 
+        
+        // Re-run observer after tab switch
+        setTimeout(initObserver, 50); 
       }
 
       tabs.forEach(t => t.addEventListener('click', () => setActiveTab(t)));
@@ -216,21 +264,15 @@
         
         observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
-            const el = entry.target;
             if (entry.isIntersecting) {
-              el.classList.add('active');
-              el.classList.remove('out-focus');
-            } else if (entry.boundingClientRect.top < 0) {
-              el.classList.add('out-focus');
-              el.classList.remove('active');
-            } else {
-              el.classList.remove('active', 'out-focus');
+              entry.target.classList.add('active');
             }
           });
-        }, { threshold: 0.1, rootMargin: "0px 0px -10% 0px" });
+        }, { threshold: 0.1 });
 
         reveals.forEach(el => observer.observe(el));
       }
+      
       document.addEventListener('DOMContentLoaded', initObserver);
     })();
   </script>
