@@ -1,225 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ishit Singh</title>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-  <style>
-    :root {
-      --bg: #000000;
-      --fg: #ffffff; 
-      --sub: #86868b; 
-      --card: #0a0a0a; 
-      --border: rgba(255, 255, 255, 0.08);
-      --font: "SF Pro Display", "SF Pro Icons", -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: "SF Mono", monospace;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: auto !important; background: var(--bg); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ishit Singh | Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     
-    body { 
-      background: var(--bg); 
-      color: var(--fg); 
-      font-family: var(--font); 
-      -webkit-font-smoothing: antialiased; 
-      overflow-x: hidden;
-      touch-action: pan-y;
-    }
-
-    /* NAVIGATION */
-    header { 
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
-      display: flex; justify-content: center; padding-top: 20px;
-      pointer-events: none;
-    }
-    nav { 
-      background: rgba(10, 10, 10, 0.8); 
-      backdrop-filter: saturate(180%) blur(20px); 
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      padding: 4px; border-radius: 50px; 
-      border: 1px solid var(--border); 
-      display: flex; gap: 2px; pointer-events: auto;
-    }
-    .nav-btn { 
-      background: transparent; border: 0; color: var(--fg); padding: 6px 18px; 
-      font-size: 11px; font-weight: 500; border-radius: 40px; 
-      cursor: pointer; opacity: 0.4; transition: all 0.4s ease;
-    }
-    .nav-btn.active { opacity: 1; background: rgba(255, 255, 255, 0.1); transform: scale(1.05); }
-
-    .reveal { opacity: 0; filter: blur(15px); transform: translateY(15px); }
-
-    .hig-container { max-width: 900px; margin: 0 auto; padding: 0 24px 30vh; }
-
-    /* --- WORK SECTION --- */
-    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
-    .hero h1 { 
-      font-size: clamp(48px, 12vw, 90px); 
-      font-weight: 700; 
-      letter-spacing: -0.03em; 
-      color: var(--fg); 
-      line-height: 1;
-      font-feature-settings: "liga" 0, "clig" 0;
-    }
-
-    .bento-grid { display: grid; grid-template-columns: repeat(13, 1fr); grid-auto-rows: 140px; gap: 16px; }
-    .card { 
-      background: var(--card); border-radius: 20px; padding: 24px; 
-      display: flex; flex-direction: column; justify-content: flex-end; 
-      border: 1px solid var(--border);
-    }
-    .c-8 { grid-column: span 8; } .c-5 { grid-column: span 5; } .r-3 { grid-row: span 3; } .r-2 { grid-row: span 2; }
-    .tag { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sub); margin-bottom: 8px; font-family: var(--font-mono); }
-    .card h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; letter-spacing: -0.01em; }
-    .card p { color: var(--sub); font-size: 13px; line-height: 1.5; }
-
-    /* --- ABOUT SECTION --- */
-    .about-section { padding-top: 150px; }
-    .about-header { border-bottom: 1px solid var(--border); padding-bottom: 32px; }
-    .about-header h1 { font-size: clamp(32px, 8vw, 48px); font-weight: 700; margin-bottom: 12px; letter-spacing: -0.03em; }
-    .about-header p { font-size: 17px; color: var(--sub); line-height: 1.4; max-width: 500px; }
-
-    .hig-row { display: grid; grid-template-columns: 160px 1fr; padding: 48px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
-    .hig-label { font-family: var(--font-mono); font-size: 10px; color: var(--sub); text-transform: uppercase; padding-top: 4px; }
-    .hig-content h2 { font-size: 24px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.01em; }
-    .hig-content p { font-size: 15px; color: #d1d1d6; line-height: 1.6; margin-bottom: 12px; }
-    .sub-p { font-size: 14px; color: var(--sub); margin-top: -6px; }
-    .highlight { color: var(--fg); font-weight: 500; }
-
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    @media (max-width: 800px) {
-      .bento-grid { display: flex; flex-direction: column; gap: 12px; }
-      .hig-row { grid-template-columns: 1fr; gap: 8px; padding: 32px 0; }
-      .about-section { padding-top: 100px; }
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <nav>
-      <button class="nav-btn active" data-tab="0">Work</button>
-      <button class="nav-btn" data-tab="1">About</button>
-    </nav>
-  </header>
-
-  <main id="swipe-zone">
-    <section id="tab-0" class="tab-content active">
-      <section class="hero"><h1 class="reveal">Ishit Singh.</h1></section>
-      <div class="hig-container">
-        <div class="bento-grid">
-          <div class="card c-8 r-3 reveal">
-            <span class="tag">Systems Logic</span>
-            <h3>C# Architecture</h3>
-            <p>Building modular engine components and systemic gameplay modules that scale without friction. Bridging pure data and interactive systems with industrial precision.</p>
-          </div>
-          <div class="card c-5 r-2 reveal">
-            <span class="tag">3D Design</span>
-            <h3>Advanced Blender</h3>
-            <p>Translating complex mechanical designs into digital geometry that feels weighted, functional, and grounded in physical reality.</p>
-          </div>
-          <div class="card c-5 r-3 reveal">
-            <span class="tag">Production</span>
-            <h3>Cinematography</h3>
-            <p>The physics of light and narrative composition, directing viewer attention through the psychology of camera movement.</p>
-          </div>
-          <div class="card c-8 r-2 reveal">
-            <span class="tag">Experimental</span>
-            <h3>The Log</h3>
-            <p>Pushing hardware past intended limits. From kernel-level Hackintosh patches to electrical load experiments that redefine "learning by breaking."</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="tab-1" class="tab-content">
-      <div class="hig-container about-section">
-        <div class="about-header reveal">
-          <h1>Guidelines</h1>
-          <p>Architecting experiences where technical complexity and aesthetic beauty are inseparable.</p>
-        </div>
-
-        <div class="hig-row reveal">
-          <div class="hig-label">Foundation</div>
-          <div class="hig-content">
-            <h2>The Narrative</h2>
-            <p>Born on <span class="highlight">April 27, 2010</span>. My perspective as a creator was born in Lucknow, starting with early childhood at The Tree House.</p>
-            <p class="sub-p">The years between 2014 and 2021 at <span class="highlight">St. Fidelis College</span> shaped my academic discipline, transitioning me from a student to a digital architect.</p>
-            <p class="sub-p">Currently navigating the intersection of engineering and design at <span class="highlight">Sunbeam School</span>, Robertsganj.</p>
-          </div>
-        </div>
-
-        <div class="hig-row reveal">
-          <div class="hig-label">Philosophy</div>
-          <div class="hig-content">
-            <h2>Core Logic</h2>
-            <p>I view code as the skeletal system of any digital experience—requiring flexibility and strength. My approach is <strong>logic-first</strong>, ensuring assets are grounded in physical reality.</p>
-          </div>
-        </div>
-
-        <div class="hig-row reveal">
-          <div class="hig-label">Anomalies</div>
-          <div class="hig-content">
-            <h2>Experimental Log</h2>
-            <p>Hardware projects that push environments to their limits. Architecting functional <span class="highlight">Hackintosh</span> systems and diving into kernel patches to force software into unintended spaces.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
-
-    let currentTab = 0;
-    const buttons = document.querySelectorAll('.nav-btn');
-    const tabs = document.querySelectorAll('.tab-content');
-
-    function switchTab(index) {
-      if (index < 0 || index >= tabs.length) return;
-      currentTab = index;
-
-      buttons.forEach((btn, i) => btn.classList.toggle('active', i === index));
-      tabs.forEach((tab, i) => {
-        tab.style.display = (i === index) ? 'block' : 'none';
-        tab.classList.toggle('active', i === index);
-      });
-
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      ScrollTrigger.refresh();
-      initAnimations();
-    }
-
-    function initAnimations() {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-      gsap.fromTo(".active .reveal", 
-        { opacity: 0, filter: "blur(15px)", y: 20 },
-        { 
-          opacity: 1, filter: "blur(0px)", y: 0, duration: 0.8, stagger: 0.1, ease: "expo.out",
-          scrollTrigger: { trigger: ".active", start: "top 85%" }
+    <style>
+        :root {
+            --bg: #000000;
+            --nav-bg: rgba(28, 28, 30, 0.7);
+            --text: #ffffff;
+            --dim: #86868b;
+            --font: "SF Pro Display", -apple-system, sans-serif;
         }
-      );
-    }
 
-    buttons.forEach((btn, i) => btn.addEventListener('click', () => switchTab(i)));
+        /* Hide Scrollbars */
+        * { box-sizing: border-box; margin: 0; padding: 0; scrollbar-width: none; }
+        *::-webkit-scrollbar { display: none; }
 
-    // Swipe handling
-    let touchstartX = 0;
-    document.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX, false);
-    document.addEventListener('touchend', e => {
-      let touchendX = e.changedTouches[0].screenX;
-      if (touchendX < touchstartX - 80) switchTab(1);
-      if (touchendX > touchstartX + 80) switchTab(0);
-    }, false);
+        body, html {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden; 
+            height: 100%;
+            width: 100%;
+            touch-action: pan-y; /* Allows vertical scrolling but captures horizontal swipes */
+        }
 
-    window.addEventListener('load', () => { initAnimations(); window.scrollTo(0, 0); });
-  </script>
+        /* --- Morphing Nav --- */
+        nav {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 44px;
+            background: var(--nav-bg);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 22px;
+            z-index: 10000;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links { display: flex; position: relative; }
+
+        /* The Animated Pill Slide */
+        .nav-pill {
+            position: absolute;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            z-index: -1;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 22px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            opacity: 0.5;
+        }
+        .nav-links button.active { opacity: 1; }
+
+        /* --- Layout --- */
+        #viewport { position: relative; width: 100%; height: 100%; }
+
+        .page {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: none;
+            overflow-y: auto; /* Allows vertical scrolling for lots of text */
+            padding: 120px 24px 80px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .page.active { display: block; }
+        .container { max-width: 750px; margin: 0 auto; width: 100%; }
+
+        /* --- Typography --- */
+        .center-hero { height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+        h1 { font-size: clamp(54px, 12vw, 110px); font-weight: 800; letter-spacing: -0.06em; }
+        h2 { font-size: 38px; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 24px; line-height: 1.1; }
+        p { font-size: 20px; line-height: 1.6; color: var(--dim); margin-bottom: 30px; font-weight: 400; }
+
+        /* --- Sections --- */
+        .content-block { margin-bottom: 60px; padding-top: 40px; border-top: 1px solid #1c1c1e; }
+        .content-block h3 { font-size: 24px; font-weight: 600; margin-bottom: 15px; color: var(--text); }
+        
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-links">
+            <div class="nav-pill" id="pill"></div>
+            <button onclick="changePage(0)" id="btn-0" class="active">Home</button>
+            <button onclick="changePage(1)" id="btn-1">About</button>
+            <button onclick="changePage(2)" id="btn-2">Projects</button>
+        </div>
+    </nav>
+
+    <div id="viewport">
+        <div id="page-0" class="page active">
+            <div class="center-hero">
+                <h1 id="hero-title">Ishit Singh.</h1>
+            </div>
+            <div class="container" style="text-align: center;">
+                <p>Welcome to my digital space. Here, engineering meets design in a pursuit of absolute simplicity and performance.</p>
+            </div>
+        </div>
+
+        <div id="page-1" class="page">
+            <div class="container">
+                <h2>About Me</h2>
+                <p>I am a developer from India with a passion for building beautiful and functional web applications. My journey started with a fascination for how code can transform a blank screen into a powerful tool that impacts people's lives.</p>
+                
+                <div class="content-block">
+                    <h3>My Philosophy</h3>
+                    <p>I believe that technology should be invisible. The best software doesn't scream for attention; it quietly empowers the user to do more. Following the principles of the Human Interface Guidelines, I aim to create software that feels native to the user's workflow.</p>
+                    <p>Whether it is optimizing a JavaScript engine for faster load times or refining the kerning in a typography-heavy layout, I pay attention to the details that others might overlook.</p>
+                </div>
+
+                <div class="content-block">
+                    <h3>Technical Background</h3>
+                    <p>My expertise lies in front-end development, specifically in creating fluid interfaces with modern frameworks. I have spent countless hours mastering the art of CSS architecture and exploring the depths of high-performance rendering. I am deeply committed to the idea of "Web Performance as a Feature," ensuring that every millisecond is accounted for.</p>
+                    <p>In addition to web technologies, I have a strong foundation in computer science fundamentals, which allows me to approach problems with a logical and structured mindset.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-2" class="page">
+            <div class="container">
+                <h2>Selected Projects</h2>
+                
+                <div class="content-block">
+                    <h3>Portfolio Website (2025)</h3>
+                    <p>A simple and clean portfolio website built using HTML and CSS. This project focuses on minimalism and effective typography to showcase developer skills. It utilizes GSAP for motion and Hammer.js for gesture-based navigation.</p>
+                    <p>Key features include a custom-built SPA (Single Page Application) logic within a single file, OLED-optimized pure black backgrounds, and a focus on scannability.</p>
+                </div>
+
+                <div class="content-block">
+                    <h3>Future System Architecture</h3>
+                    <p>Currently engineering a high-performance system architecture. This involves researching how to bridge the gap between low-level performance and high-level abstraction. The goal is to create a library that allows developers to build complex applications without sacrificing speed.</p>
+                    <p>This project is currently in the research phase, exploring the potential of WebAssembly and modern browser APIs to push the boundaries of what is possible on the web.</p>
+                </div>
+
+                <div class="content-block">
+                    <h3>UI Research Lab</h3>
+                    <p>An ongoing exploration into the psychology of motion. How does a 200ms blur impact the perceived value of a digital product? By studying user interactions and system feedback, I am building a set of guidelines for high-end web motion.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const pages = document.querySelectorAll('.page');
+        const buttons = document.querySelectorAll('.nav-links button');
+        const pill = document.getElementById('pill');
+        let isTransitioning = false;
+
+        function updatePill() {
+            const activeBtn = document.getElementById(`btn-${currentIndex}`);
+            pill.style.width = `${activeBtn.offsetWidth}px`;
+            pill.style.left = `${activeBtn.offsetLeft}px`;
+        }
+
+        function changePage(index) {
+            if (index === currentIndex || isTransitioning) return;
+            isTransitioning = true;
+
+            const outgoing = pages[currentIndex];
+            const incoming = pages[index];
+
+            currentIndex = index;
+            buttons.forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${index}`).classList.add('active');
+            updatePill();
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    outgoing.classList.remove('active');
+                    outgoing.style.display = 'none';
+                    incoming.classList.add('active');
+                    isTransitioning = false;
+                }
+            });
+
+            tl.to(outgoing, { filter: "blur(20px)", opacity: 0, scale: 0.98, duration: 0.5 });
+            tl.fromTo(incoming, 
+                { display: 'block', filter: "blur(20px)", opacity: 0, scale: 1.02 },
+                { filter: "blur(0px)", opacity: 1, scale: 1, duration: 0.7, ease: "power3.out" },
+                "-=0.2"
+            );
+        }
+
+        // Gesture Control
+        const mc = new Hammer(document.getElementById('viewport'));
+        mc.on('swipeleft', () => { if (currentIndex < pages.length - 1) changePage(currentIndex + 1); });
+        mc.on('swiperight', () => { if (currentIndex > 0) changePage(currentIndex - 1); });
+
+        window.onload = () => {
+            updatePill();
+            gsap.from("#hero-title", { filter: "blur(15px)", opacity: 0, duration: 1.5 });
+        };
+    </script>
 </body>
 </html>
