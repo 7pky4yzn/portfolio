@@ -30,117 +30,116 @@
       overflow-x: hidden;
     }
 
-    /* NAVIGATION */
-    header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; justify-content: center; padding-top: 24px; }
+    /* NAVIGATION - Fixed for Mobile Overlap */
+    header { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      z-index: 1000; 
+      display: flex; 
+      justify-content: center; 
+      padding-top: 16px; /* Reduced for mobile */
+      pointer-events: none; /* Allows clicking through the header area */
+    }
     nav { 
-      background: rgba(255, 255, 255, 0.7); 
+      background: rgba(255, 255, 255, 0.8); 
       backdrop-filter: saturate(180%) blur(20px); 
-      padding: 5px; border-radius: 50px; 
-      border: 1px solid rgba(0, 0, 0, 0.05); 
-      display: flex; gap: 4px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      padding: 4px; 
+      border-radius: 50px; 
+      border: 1px solid rgba(0, 0, 0, 0.08); 
+      display: flex; 
+      gap: 4px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+      pointer-events: auto; /* Re-enables clicking on buttons */
     }
     .nav-btn { 
-      background: transparent; border: 0; color: var(--fg); padding: 8px 24px; 
-      font-size: 12px; font-weight: 500; border-radius: 40px; 
-      cursor: pointer; opacity: 0.5; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background: transparent; 
+      border: 0; 
+      color: var(--fg); 
+      padding: 6px 20px; 
+      font-size: 13px; 
+      font-weight: 500; 
+      border-radius: 40px; 
+      cursor: pointer; 
+      opacity: 0.4; 
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .nav-btn.active { opacity: 1; background: rgba(0,0,0,0.05); }
+    .nav-btn.active { opacity: 1; background: rgba(0,0,0,0.06); }
 
-    /* CLEAN REVEAL STYLES */
+    /* REVEAL SYSTEM */
     .reveal { 
       opacity: 0; 
-      filter: blur(20px); 
-      transform: translateY(20px);
+      filter: blur(15px); 
+      transform: translateY(15px);
       will-change: opacity, filter, transform;
     }
 
-    /* GLOBAL CONTAINER */
     .hig-container { 
       max-width: 980px; 
       margin: 0 auto; 
-      padding: 0 22px 50vh; 
+      padding: 0 24px 40vh; 
     }
 
     /* --- HOME TAB --- */
-    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .hero { 
+      height: 100vh; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      text-align: center;
+      padding-top: 60px; /* Offset for nav */
+    }
     
     .hero h1 { 
-      font-size: clamp(48px, 10vw, 110px); 
+      font-size: clamp(54px, 14vw, 110px); 
       font-weight: 700; 
-      letter-spacing: -0.04em; 
+      letter-spacing: -0.03em; /* Slightly wider to fix 't' clipping */
       color: var(--fg);
+      line-height: 0.95;
+      padding-right: 0.05em; /* Padding for the period */
       font-feature-settings: "liga" 0, "clig" 0, "kern" 1;
       text-rendering: optimizeLegibility;
-      line-height: 1;
     }
 
     .bento-grid { 
       display: grid; 
       grid-template-columns: repeat(13, 1fr); 
       grid-auto-rows: 160px; 
-      gap: 24px; 
+      gap: 20px; 
     }
-    
-    .card { 
-      background: var(--card); 
-      border-radius: 28px; 
-      padding: 32px; 
-      display: flex; 
-      flex-direction: column; 
-      justify-content: flex-end; 
-    }
-    .c-8 { grid-column: span 8; }
-    .c-5 { grid-column: span 5; }
-    .r-3 { grid-row: span 3; }
-    .r-2 { grid-row: span 2; }
-
-    .tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sub); margin-bottom: 12px; font-family: var(--font-mono); }
-    .card h3 { font-size: 22px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .card { background: var(--card); border-radius: 28px; padding: 28px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .c-8 { grid-column: span 8; } .c-5 { grid-column: span 5; } .r-3 { grid-row: span 3; } .r-2 { grid-row: span 2; }
+    .tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sub); margin-bottom: 10px; font-family: var(--font-mono); }
+    .card h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.02em; }
     .card p { color: var(--sub); font-size: 15px; line-height: 1.5; }
 
     /* --- ABOUT TAB --- */
-    .about-section { padding-top: 20vh; }
-    
-    .about-header { 
-      border-bottom: 1px solid #d2d2d7; 
-      padding-bottom: 44px; 
-    }
-    .about-header h1 { font-size: 48px; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 12px; }
-    .about-header p { font-size: 22px; color: var(--sub); line-height: 1.3; max-width: 700px; }
+    .about-section { padding-top: 140px; }
+    .about-header { border-bottom: 1px solid #e5e5e7; padding-bottom: 40px; }
+    .about-header h1 { font-size: clamp(40px, 10vw, 56px); font-weight: 700; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .about-header p { font-size: 20px; color: var(--sub); line-height: 1.4; max-width: 600px; }
 
-    .hig-row { 
-      display: grid; 
-      grid-template-columns: 200px 1fr; 
-      padding: 80px 0; 
-      border-bottom: 1px solid #f2f2f2; 
-    }
+    .hig-row { display: grid; grid-template-columns: 180px 1fr; padding: 60px 0; border-bottom: 1px solid #f2f2f2; }
     .hig-row:last-child { border-bottom: none; }
-
-    .hig-label { 
-      font-family: var(--font-mono); 
-      font-size: 12px; 
-      font-weight: 500; 
-      color: var(--fg); 
-      text-transform: uppercase; 
-      letter-spacing: 0.05em; 
-      padding-top: 8px;
-    }
-
-    .hig-content h2 { font-size: 32px; font-weight: 600; margin-bottom: 20px; letter-spacing: -0.02em; }
-    .hig-content p { font-size: 19px; color: var(--fg); margin-bottom: 20px; line-height: 1.5; }
-    .hig-content .sub-p { font-size: 17px; color: var(--sub); margin-top: -10px; }
+    .hig-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--fg); text-transform: uppercase; letter-spacing: 0.05em; padding-top: 6px; }
+    .hig-content h2 { font-size: 28px; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .hig-content p { font-size: 18px; color: var(--fg); margin-bottom: 16px; line-height: 1.5; }
+    .sub-p { font-size: 17px; color: var(--sub); margin-top: -8px; }
     .highlight { color: var(--fg); font-weight: 600; }
 
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    @media (max-width: 900px) { 
-      .bento-grid { display: flex; flex-direction: column; } 
-      .card { min-height: 280px; } 
-      .hig-row { grid-template-columns: 1fr; gap: 20px; padding: 40px 0; }
-      .about-header h1 { font-size: 36px; }
-      .hig-container { padding: 0 24px 20vh; }
+    /* MOBILE OPTIMIZATIONS */
+    @media (max-width: 800px) {
+      .hig-container { padding: 0 20px 20vh; }
+      .bento-grid { display: flex; flex-direction: column; gap: 16px; }
+      .card { min-height: 260px; padding: 24px; border-radius: 24px; }
+      .hig-row { grid-template-columns: 1fr; gap: 12px; padding: 40px 0; }
+      .about-section { padding-top: 100px; }
+      .about-header { padding-bottom: 32px; }
+      .about-header h1 { font-size: 38px; }
+      .about-header p { font-size: 18px; }
+      .hig-content h2 { font-size: 24px; }
     }
   </style>
 </head>
@@ -162,28 +161,28 @@
           <div class="card c-8 r-3 reveal">
             <span class="tag">Systems Logic</span>
             <h3>C# Architecture</h3>
-            <p>Building modular engine components and systemic gameplay modules that scale without friction. Bridging pure data and interactive systems with industrial precision.</p>
+            <p>Building modular engine components and systemic gameplay modules that scale without friction.</p>
           </div>
           <div class="card c-5 r-2 reveal">
             <span class="tag">3D Design</span>
             <h3>Advanced Blender</h3>
-            <p>Translating complex mechanical designs into digital geometry that feels weighted, functional, and grounded in physical reality.</p>
+            <p>Translating complex mechanical designs into digital geometry that feels weighted and functional.</p>
           </div>
           <div class="card c-5 r-3 reveal">
             <span class="tag">Production</span>
             <h3>Cinematography</h3>
-            <p>The physics of light and narrative composition, directing viewer attention through the psychology of camera movement.</p>
+            <p>The physics of light and narrative composition to direct viewer attention.</p>
           </div>
           <div class="card c-8 r-2 reveal">
             <span class="tag">Experimental</span>
             <h3>The Log</h3>
-            <p>Pushing hardware past intended limits. From kernel-level Hackintosh patches to electrical load experiments that redefine "learning by breaking."</p>
+            <p>Pushing hardware past intended limits. From kernel-level patches to electrical load experiments.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="about-tab" class="tab-content">
+    <section id="about-tab" class="tab-content" style="display:none;">
       <div class="hig-container about-section">
         <div class="about-header reveal">
           <h1>Guidelines</h1>
@@ -195,8 +194,8 @@
           <div class="hig-content">
             <h2>The Narrative</h2>
             <p>Born on <strong>April 27, 2010</strong>. My perspective as a creator was born in <span class="highlight">Lucknow</span>, starting with early childhood at <span class="highlight">The Tree House</span>.</p>
-            <p class="sub-p">The years between 2014 and 2021 at <span class="highlight">St. Fidelis College</span> shaped my academic discipline, transitioning me from a student of digital architecture.</p>
-            <p class="sub-p">Currently navigating the intersection of engineering and design at <span class="highlight">Sunbeam School</span>, Robertsganj.</p>
+            <p class="sub-p">Years between 2014 and 2021 at <span class="highlight">St. Fidelis College</span> shaped my academic discipline.</p>
+            <p class="sub-p">Currently at <span class="highlight">Sunbeam School</span>, Robertsganj.</p>
           </div>
         </div>
 
@@ -204,15 +203,7 @@
           <div class="hig-label">Philosophy</div>
           <div class="hig-content">
             <h2>Core Logic</h2>
-            <p>I view code as the skeletal system of any digital experience—requiring flexibility and strength. My approach is <strong>logic-first</strong>, ensuring assets are grounded in physical reality.</p>
-          </div>
-        </div>
-
-        <div class="hig-row reveal">
-          <div class="hig-label">Anomalies</div>
-          <div class="hig-content">
-            <h2>Experimental Log</h2>
-            <p>Hardware projects that push environments to their limits. Architecting functional <span class="highlight">Hackintosh</span> systems and diving into kernel patches to force software into unintended spaces.</p>
+            <p>I view code as the skeletal system of any digital experience—requiring flexibility and strength. My approach is <strong>logic-first</strong>.</p>
           </div>
         </div>
       </div>
@@ -225,14 +216,12 @@
     function initAnimations() {
       ScrollTrigger.getAll().forEach(t => t.kill());
       
-      // Removed scrub and cinema lens effect
-      // Elements now fade in and stay visible
       document.querySelectorAll('.reveal').forEach((el) => {
         gsap.to(el, {
           scrollTrigger: {
             trigger: el,
-            start: "top 90%", 
-            toggleActions: "play none none reverse", // Plays once on scroll down, reverses on scroll up
+            start: "top 92%", 
+            toggleActions: "play none none reverse",
           },
           opacity: 1, 
           filter: "blur(0px)", 
@@ -249,7 +238,18 @@
     buttons.forEach(btn => {
       btn.addEventListener('click', () => {
         buttons.forEach(b => b.classList.toggle('active', b === btn));
-        tabs.forEach(t => t.classList.toggle('active', t.id === btn.dataset.target));
+        const target = btn.dataset.target;
+        
+        tabs.forEach(t => {
+          if (t.id === target) {
+            t.style.display = 'block';
+            t.classList.add('active');
+          } else {
+            t.style.display = 'none';
+            t.classList.remove('active');
+          }
+        });
+
         window.scrollTo(0, 0);
         setTimeout(() => { 
           initAnimations(); 
