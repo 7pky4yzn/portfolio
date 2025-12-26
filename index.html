@@ -6,6 +6,11 @@
     <meta name="theme-color" content="#000000">
     <title>Ishit Singh | Portfolio</title>
     
+    <!-- Google Fonts: Inter (Proxy for SF Pro) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -17,38 +22,22 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: [
-                '-apple-system', 
-                'BlinkMacSystemFont', 
-                '"SF Pro Display"', 
-                '"SF Pro Text"', 
-                '"Helvetica Neue"', 
-                'sans-serif'
-              ],
+              sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
             },
             colors: {
-              background: '#000000',
-              card: '#1C1C1E', // Apple Fitness Dark Gray
-              cardHover: '#2C2C2E',
-              accent: '#32D74B', // Apple Fitness Green
-              primary: '#0A84FF',
+              'ios-bg': '#000000',
+              'ios-card': '#1C1C1E',
+              'ios-card-hover': '#2C2C2E',
+              'ios-text': '#FFFFFF',
+              'ios-subtext': '#86868B',
+              'ios-border': 'rgba(255, 255, 255, 0.1)',
             },
             boxShadow: {
-              'ios-depth': '0 20px 40px -10px rgba(0,0,0,0.7)',
+              'glow': '0 0 20px rgba(255, 255, 255, 0.05)',
+              'modal': '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
             },
-            animation: {
-              'fade-in': 'fadeIn 0.6s ease-out forwards',
-              'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0' },
-                '100%': { opacity: '1' },
-              },
-              slideUp: {
-                '0%': { transform: 'translateY(40px)', opacity: '0' },
-                '100%': { transform: 'translateY(0)', opacity: '1' },
-              }
+            transitionTimingFunction: {
+              'spring': 'cubic-bezier(0.25, 0.1, 0.25, 1.0)',
             }
           }
         }
@@ -60,235 +49,210 @@
             background-color: #000000;
             color: #FFFFFF;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-            touch-action: manipulation;
         }
 
-        /* Hide Scrollbar */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Hide Scrollbar Globally */
+        * {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        *::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
 
-        /* iOS Card Style */
+        /* Card Animation */
         .bento-card {
             background-color: #1C1C1E;
-            border-radius: 2rem; /* 32px */
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
+            border-radius: 32px;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .bento-card:hover {
+            transform: scale(1.02);
+            background-color: #2C2C2E;
+            border-color: rgba(255, 255, 255, 0.15);
         }
         .bento-card:active {
-            transform: scale(0.96);
-            background-color: #2C2C2E;
+            transform: scale(0.98);
         }
 
-        /* SVG Ring Animation */
-        .progress-ring__circle {
-            transition: stroke-dashoffset 1s ease-in-out;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
+        /* Typography */
+        h1, h2 { letter-spacing: -0.04em; }
+        
+        /* Modal Backdrop */
+        #modal-backdrop {
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background-color: rgba(0, 0, 0, 0.6);
         }
-
-        /* Dot Grid */
-        .dot-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 6px;
-        }
-        .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: rgba(255,255,255,0.1);
-        }
-        .dot.active { background-color: #32D74B; box-shadow: 0 0 8px rgba(50, 215, 75, 0.4); }
-        .dot.semi { background-color: rgba(50, 215, 75, 0.4); }
-
-        #modal-backdrop { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
     </style>
 </head>
-<body class="selection:bg-green-500 selection:text-black">
+<body class="selection:bg-white selection:text-black pb-20">
 
-    <!-- Landing Hero -->
-    <header class="h-screen flex flex-col items-center justify-center p-4">
-        <h1 class="text-6xl md:text-9xl font-bold tracking-tighter text-white text-center animate-slide-up" style="animation-delay: 0.1s;">Ishit Singh.</h1>
-    </header>
+    <!-- Navbar (Minimal) -->
+    <nav class="fixed top-0 left-0 right-0 z-40 px-6 py-4 flex justify-between items-center bg-black/80 backdrop-blur-md border-b border-white/10">
+        <span class="font-bold text-lg tracking-tight text-white">Ishit Singh</span>
+        <div class="bg-white text-black text-xs font-semibold px-3 py-1 rounded-full">Available</div>
+    </nav>
 
-    <!-- Main Grid -->
-    <main class="max-w-md md:max-w-5xl mx-auto px-4 md:px-8 pb-32 grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
+    <!-- Main Container -->
+    <main class="max-w-[1000px] mx-auto px-6 pt-32 animate-[fadeIn_0.8s_ease-out]">
+        
+        <!-- Header -->
+        <header class="mb-16">
+            <h1 class="text-6xl md:text-8xl font-extrabold text-white leading-[0.9]">
+                Design<br>
+                <span class="text-ios-subtext">Engineer.</span>
+            </h1>
+        </header>
 
-        <!-- Card 1: Bio (Mimics Calendar/Activity Card) -->
-        <div onclick="openModal('bio')" class="bento-card col-span-1 md:col-span-2 md:row-span-2 p-6 flex flex-col justify-between cursor-pointer group animate-slide-up" style="animation-delay: 0.2s;">
-            <!-- Dot Visualization -->
-            <div class="w-full h-32 md:h-40 flex items-center justify-center opacity-80 mt-2">
-                <div class="dot-grid" id="bio-dots">
-                    <!-- Dots injected via JS -->
-                </div>
-            </div>
+        <!-- Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[minmax(240px,auto)]">
 
-            <div class="flex items-center gap-4 mt-4">
-                <div class="relative w-12 h-12 flex items-center justify-center">
-                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 36 36">
-                        <path class="text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
-                        <path class="text-green-500 progress-ring__circle" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-dashoffset="25" />
-                    </svg>
-                    <span class="text-xs font-bold text-white">IS</span>
-                </div>
-                <div>
-                    <h2 class="text-xl font-bold text-white">Design Engineer</h2>
-                    <p class="text-gray-500 text-sm font-medium">About Me</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 2: Portfolio (Mimics Workout Card) -->
-        <div onclick="openModal('portfolio')" class="bento-card col-span-1 md:col-span-2 p-6 flex flex-col justify-between cursor-pointer min-h-[220px] animate-slide-up" style="animation-delay: 0.3s;">
-            <div class="flex justify-between items-start">
-                 <!-- Ring Icon -->
-                <div class="relative w-14 h-14">
-                    <svg class="w-full h-full transform -rotate-90">
-                        <circle cx="28" cy="28" r="24" stroke="#333" stroke-width="4" fill="none" />
-                        <circle cx="28" cy="28" r="24" stroke="#0A84FF" stroke-width="4" fill="none" stroke-dasharray="150" stroke-dashoffset="30" stroke-linecap="round" />
-                    </svg>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <i data-lucide="layout" class="w-5 h-5 text-white"></i>
+            <!-- 01: Bio -->
+            <div onclick="openModal('bio')" class="bento-card col-span-1 md:col-span-2 lg:row-span-2 p-8 flex flex-col justify-between cursor-pointer group">
+                <div class="flex justify-between items-start">
+                    <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border border-white/10">
+                        <span class="font-bold text-xl text-white">IS</span>
                     </div>
+                    <i data-lucide="arrow-up-right" class="text-ios-subtext group-hover:text-white transition-colors"></i>
                 </div>
-                <div class="p-2 rounded-full bg-gray-800/50">
-                    <i data-lucide="arrow-right" class="w-4 h-4 text-gray-400"></i>
-                </div>
-            </div>
-            
-            <div class="mt-4">
-                <h3 class="text-2xl font-bold text-white">Portfolio 2025</h3>
-                <p class="text-gray-500 font-medium">Selected Works</p>
-            </div>
-        </div>
-
-        <!-- Card 3: System (Mimics Stats Card) -->
-        <div onclick="openModal('system')" class="bento-card col-span-1 md:col-span-1 p-6 flex flex-col justify-between cursor-pointer animate-slide-up" style="animation-delay: 0.4s;">
-            <div class="flex items-baseline gap-1">
-                <span class="text-4xl font-bold text-white">v2.0</span>
-                <span class="text-gray-500 font-medium">arch</span>
-            </div>
-            <div class="mt-8">
-                <h3 class="text-lg font-bold text-white">System</h3>
-                <p class="text-gray-500 text-xs">Research</p>
-            </div>
-        </div>
-
-        <!-- Card 4: Philosophy (Mimics Stats Card) -->
-        <div onclick="openModal('philosophy')" class="bento-card col-span-1 md:col-span-1 p-6 flex flex-col justify-between cursor-pointer animate-slide-up" style="animation-delay: 0.5s;">
-             <div class="flex items-baseline gap-1">
-                <span class="text-4xl font-bold text-white">100</span>
-                <span class="text-gray-500 font-medium">%</span>
-            </div>
-            <div class="mt-8">
-                <h3 class="text-lg font-bold text-white">Philosophy</h3>
-                <p class="text-gray-500 text-xs">Invisible Tech</p>
-            </div>
-        </div>
-
-        <!-- Card 5: UI Lab (Mimics Chart Card) -->
-        <div onclick="openModal('ui-lab')" class="bento-card col-span-1 md:col-span-2 p-6 flex flex-col justify-between cursor-pointer animate-slide-up" style="animation-delay: 0.6s;">
-            <div class="flex items-end space-x-2 h-16 pb-2 border-b border-gray-800 mb-4">
-                <div class="w-1/6 bg-gray-800 h-8 rounded-t-sm"></div>
-                <div class="w-1/6 bg-gray-700 h-12 rounded-t-sm"></div>
-                <div class="w-1/6 bg-gray-600 h-10 rounded-t-sm"></div>
-                <div class="w-1/6 bg-pink-600 h-14 rounded-t-sm shadow-[0_0_15px_rgba(219,39,119,0.5)]"></div>
-                <div class="w-1/6 bg-gray-600 h-6 rounded-t-sm"></div>
-                <div class="w-1/6 bg-gray-700 h-10 rounded-t-sm"></div>
-            </div>
-            <div class="flex justify-between items-end">
                 <div>
-                    <h3 class="text-xl font-bold text-white">UI Research Lab</h3>
-                    <p class="text-gray-500 font-medium text-sm">Motion Psychology</p>
+                    <h3 class="text-3xl font-bold mb-2">About Me</h3>
+                    <p class="text-ios-subtext font-medium leading-relaxed max-w-sm">
+                        A developer from India focused on the intersection of engineering and design.
+                    </p>
                 </div>
-                <span class="text-2xl font-bold text-pink-500">Exp. 04</span>
             </div>
+
+            <!-- 02: Portfolio (Inverted for Contrast) -->
+            <div onclick="openModal('portfolio')" class="bento-card col-span-1 md:col-span-2 p-8 flex flex-col justify-between cursor-pointer group !bg-white !border-white hover:!bg-gray-200">
+                <div class="flex justify-between items-start">
+                    <i data-lucide="layout" class="text-black/50"></i>
+                    <span class="text-xs font-bold uppercase tracking-widest text-black/50">Selected Works</span>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-4xl font-bold mb-1 text-black">Portfolio</h3>
+                    <p class="text-black/60 font-medium">2025 Edition</p>
+                </div>
+            </div>
+
+            <!-- 03: System -->
+            <div onclick="openModal('system')" class="bento-card col-span-1 p-8 flex flex-col justify-between cursor-pointer">
+                 <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center border border-white/5">
+                    <i data-lucide="cpu" class="w-6 h-6 text-white"></i>
+                 </div>
+                 <div>
+                    <h3 class="text-xl font-bold">System</h3>
+                    <p class="text-ios-subtext text-sm">Architecture</p>
+                 </div>
+            </div>
+
+            <!-- 04: Philosophy -->
+            <div onclick="openModal('philosophy')" class="bento-card col-span-1 p-8 flex flex-col justify-center items-center text-center cursor-pointer">
+                <span class="text-5xl font-bold tracking-tighter mb-2 text-white">100%</span>
+                <span class="text-ios-subtext font-semibold text-sm uppercase tracking-wide">Invisible Tech</span>
+            </div>
+
+            <!-- 05: UI Lab -->
+            <div onclick="openModal('ui-lab')" class="bento-card col-span-1 md:col-span-2 p-8 flex items-center justify-between cursor-pointer group">
+                <div class="flex flex-col justify-center h-full">
+                    <span class="text-xs font-bold uppercase tracking-widest text-ios-subtext mb-2">Research</span>
+                    <h3 class="text-3xl font-bold">UI Lab</h3>
+                    <p class="text-ios-subtext mt-1">Motion Psychology</p>
+                </div>
+                <!-- Abstract Graphic -->
+                <div class="w-24 h-24 rounded-full border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                    <div class="w-16 h-16 rounded-full bg-white/5 backdrop-blur-sm blur-md"></div>
+                </div>
+            </div>
+
+            <!-- 06: Contact -->
+            <div class="bento-card col-span-1 md:col-span-2 p-8 flex items-center justify-between cursor-pointer hover:!bg-white group transition-colors duration-300">
+                <div>
+                    <h3 class="text-2xl font-bold group-hover:text-black transition-colors">Let's Collaborate</h3>
+                    <p class="text-ios-subtext group-hover:text-black/60 transition-colors">Open for projects</p>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                </div>
+            </div>
+
         </div>
 
-         <!-- Contact -->
-        <div class="bento-card col-span-1 md:col-span-2 bg-[#0A84FF] border-none p-6 flex items-center justify-between cursor-pointer animate-slide-up group" style="animation-delay: 0.7s; background-color: #0A84FF;">
-             <div>
-                <h3 class="text-xl font-bold text-white">Let's Collaborate</h3>
-                <p class="text-blue-100 font-medium text-sm">Open for 2025</p>
-            </div>
-            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-blue-600 transition-colors text-white">
-                <i data-lucide="mail" class="w-5 h-5"></i>
-            </div>
-        </div>
+        <!-- Footer -->
+        <footer class="mt-20 pt-10 border-t border-white/10 flex justify-between items-center text-ios-subtext text-sm">
+            <p>© 2025 Ishit Singh.</p>
+            <p>Designed in California.</p>
+        </footer>
 
     </main>
 
-    <!-- Modal (Hidden by default) -->
+    <!-- Modal Overlay -->
     <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
-        <div id="modal-backdrop" onclick="closeModal()" class="absolute inset-0 bg-black/60 transition-opacity duration-300 opacity-0"></div>
+        <!-- Backdrop -->
+        <div id="modal-backdrop" onclick="closeModal()" class="absolute inset-0 opacity-0 transition-opacity duration-500"></div>
         
-        <div id="modal-content" class="relative w-full max-w-lg bg-[#1C1C1E] rounded-[2.5rem] shadow-2xl border border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[85vh]">
-            <!-- Modal Header -->
-            <div class="px-8 pt-8 pb-4 flex justify-between items-start bg-[#1C1C1E] sticky top-0 z-20 border-b border-white/5">
+        <!-- Modal Card -->
+        <div id="modal-content" class="relative w-full max-w-2xl bg-[#1C1C1E] rounded-[40px] shadow-modal overflow-hidden transform scale-95 opacity-0 transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) max-h-[85vh] flex flex-col border border-white/10">
+            
+            <!-- Sticky Header -->
+            <div class="px-8 pt-8 pb-4 bg-[#1C1C1E]/90 backdrop-blur-sm sticky top-0 z-10 flex justify-between items-center border-b border-white/5">
                 <div>
-                    <h2 id="modal-title" class="text-3xl font-bold text-white">Title</h2>
-                    <p id="modal-subtitle" class="text-gray-500 font-medium mt-1">Subtitle</p>
+                    <h2 id="modal-title" class="text-3xl font-bold text-white tracking-tight">Title</h2>
+                    <p id="modal-subtitle" class="text-ios-subtext font-medium mt-1">Subtitle</p>
                 </div>
-                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-[#2C2C2E] text-gray-400 flex items-center justify-center hover:bg-gray-700 hover:text-white transition-colors">
+                <button onclick="closeModal()" class="w-10 h-10 rounded-full bg-[#2C2C2E] hover:bg-white hover:text-black text-gray-400 flex items-center justify-center transition-colors">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-            
-            <!-- Modal Body -->
-            <div id="modal-body" class="px-8 py-8 overflow-y-auto no-scrollbar text-gray-300 leading-relaxed text-lg">
-                <!-- Content injected via JS -->
+
+            <!-- Content -->
+            <div id="modal-body" class="px-8 py-8 overflow-y-auto text-lg leading-relaxed text-gray-300 space-y-6">
+                <!-- Injected via JS -->
             </div>
+            
+            <!-- Bottom Fade for scroll hint -->
+            <div class="h-8 bg-gradient-to-t from-[#1C1C1E] to-transparent pointer-events-none sticky bottom-0"></div>
         </div>
     </div>
 
-    <!-- Data & Scripts -->
+    <!-- Logic -->
     <script>
-        // Generate Dots for Bio Card
-        const dotContainer = document.getElementById('bio-dots');
-        for(let i=0; i<48; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            if (Math.random() > 0.7) dot.classList.add('active');
-            else if (Math.random() > 0.5) dot.classList.add('semi');
-            dotContainer.appendChild(dot);
-        }
-
-        // Content Database
         const contentData = {
             'bio': {
                 title: 'Design Engineer',
                 subtitle: 'About Me',
-                body: `<p class="mb-6 text-xl text-white">Engineering meets design in a pursuit of absolute simplicity.</p>
-                       <p class="mb-4">I am a developer from India with a passion for building beautiful and functional web applications. My journey started with a fascination for how code can transform a blank screen into a powerful tool.</p>
-                       <p>My expertise lies in front-end development, specifically in creating fluid interfaces with modern frameworks.</p>`
+                body: `<p class="text-white text-xl font-medium mb-4">Engineering meets design in a pursuit of absolute simplicity.</p>
+                       <p>I am a developer from India with a passion for building beautiful and functional web applications. My journey started with a fascination for how code can transform a blank screen into a powerful tool.</p>
+                       <p>My expertise lies in front-end development, specifically in creating fluid interfaces with modern frameworks. I am deeply committed to the idea of "Web Performance as a Feature," ensuring that every millisecond is accounted for.</p>`
             },
             'portfolio': {
                 title: 'Portfolio 2025',
                 subtitle: 'Selected Works',
-                body: `<p class="mb-4">A simple and clean portfolio website built using HTML and CSS. This project focuses on minimalism and effective typography to showcase developer skills.</p>
-                       <ul class="list-disc pl-5 space-y-2 text-gray-400">
-                           <li>Custom SPA logic</li>
-                           <li>OLED-optimized blacks</li>
-                           <li>Motion-rich interactions</li>
-                       </ul>`
-            },
-            'philosophy': {
-                title: '100% Invisible',
-                subtitle: 'My Philosophy',
-                body: `<p class="mb-4">I believe that technology should be invisible. The best software doesn't scream for attention; it quietly empowers the user to do more.</p>
-                       <p>Following the principles of the Human Interface Guidelines, I aim to create software that feels native to the user's workflow.</p>`
+                body: `<p class="text-white text-xl font-medium mb-4">A digital gallery of work.</p>
+                       <p>A simple and clean portfolio website built using HTML and CSS. This project focuses on minimalism and effective typography to showcase developer skills.</p>
+                       <p>Designed with the precision of a physical product, avoiding unnecessary flair in favor of usability and speed.</p>`
             },
             'system': {
-                title: 'System v2.0',
-                subtitle: 'Architecture Research',
-                body: `<p class="mb-4">Currently engineering a high-performance system architecture. This involves researching how to bridge the gap between low-level performance and high-level abstraction.</p>
+                title: 'System Architecture',
+                subtitle: 'Research',
+                body: `<p class="text-white text-xl font-medium mb-4">Bridging the gap.</p>
+                       <p>Currently engineering a high-performance system architecture. This involves researching how to bridge the gap between low-level performance and high-level abstraction.</p>
                        <p>The goal is to create a library that allows developers to build complex applications without sacrificing speed.</p>`
             },
+            'philosophy': {
+                title: 'Philosophy',
+                subtitle: 'Invisible Tech',
+                body: `<p class="text-white text-xl font-medium mb-4">100% Invisible.</p>
+                       <p>I believe that technology should be invisible. The best software doesn't scream for attention; it quietly empowers the user to do more.</p>
+                       <p>Following the principles of Human Interface Guidelines, I aim to create software that feels native to the user's workflow.</p>`
+            },
             'ui-lab': {
-                title: 'UI Research Lab',
+                title: 'UI Lab',
                 subtitle: 'Motion Psychology',
-                body: `<p class="mb-4">An ongoing exploration into the psychology of motion. How does a 200ms blur impact the perceived value of a digital product?</p>
+                body: `<p class="text-white text-xl font-medium mb-4">The feel of software.</p>
+                       <p>An ongoing exploration into the psychology of motion. How does a 200ms blur impact the perceived value of a digital product?</p>
                        <p>By studying user interactions and system feedback, I am building a set of guidelines for high-end web motion.</p>`
             }
         };
@@ -304,16 +268,14 @@
             const data = contentData[id];
             if (!data) return;
 
-            // Populate Data
             modalTitle.innerText = data.title;
             modalSubtitle.innerText = data.subtitle;
             modalBody.innerHTML = data.body;
 
-            // Show Modal
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
-            // Animate In
+            // Animation Frame for transition
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     backdrop.classList.remove('opacity-0');
@@ -326,7 +288,6 @@
         }
 
         function closeModal() {
-            // Animate Out
             backdrop.classList.add('opacity-0');
             content.classList.remove('scale-100', 'opacity-100');
             content.classList.add('scale-95', 'opacity-0');
@@ -335,10 +296,9 @@
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
                 document.body.style.overflow = '';
-            }, 300);
+            }, 500);
         }
 
-        // Initialize Icons
         lucide.createIcons();
     </script>
 </body>
