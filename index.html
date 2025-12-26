@@ -3,303 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#000000">
-    <title>Ishit Singh | Portfolio</title>
+    <meta name="theme-color" content="#050505">
+    <title>Ishit Singh</title>
     
-    <!-- Google Fonts: Inter (Proxy for SF Pro) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            },
-            colors: {
-              'ios-bg': '#000000',
-              'ios-card': '#1C1C1E',
-              'ios-card-hover': '#2C2C2E',
-              'ios-text': '#FFFFFF',
-              'ios-subtext': '#86868B',
-              'ios-border': 'rgba(255, 255, 255, 0.1)',
-            },
-            boxShadow: {
-              'glow': '0 0 20px rgba(255, 255, 255, 0.05)',
-              'modal': '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-            },
-            transitionTimingFunction: {
-              'spring': 'cubic-bezier(0.25, 0.1, 0.25, 1.0)',
-            }
-          }
-        }
-      }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
-        body {
-            background-color: #000000;
-            color: #FFFFFF;
-            -webkit-font-smoothing: antialiased;
+        :root {
+            --bg: #050505; /* Slightly deeper black */
+            --surface: #101010;
+            --surface-highlight: #181818;
+            --text-primary: #F5F5F7;
+            --text-secondary: #98989D; /* Improved legibility (System Gray 2 Light) */
+            --text-tertiary: #6E6E73;
+            --divider: rgba(255,255,255,0.08);
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* Apple-style ease */
         }
 
-        /* Hide Scrollbar Globally */
-        * {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        *::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
-        }
-
-        /* Card Animation */
-        .bento-card {
-            background-color: #1C1C1E;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .bento-card:hover {
-            transform: scale(1.02);
-            background-color: #2C2C2E;
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-        .bento-card:active {
-            transform: scale(0.98);
-        }
-
-        /* Typography */
-        h1, h2 { letter-spacing: -0.04em; }
+        /* Base */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* Modal Backdrop */
-        #modal-backdrop {
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            background-color: rgba(0, 0, 0, 0.6);
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
         }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-stack);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; }
+        
+        /* Typography System - Modeled after Apple Product Pages */
+        
+        .hero-name {
+            font-size: clamp(44px, 7vw, 96px);
+            line-height: 1.05;
+            letter-spacing: -0.035em;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .hero-sub {
+            font-size: clamp(21px, 2.5vw, 28px);
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 680px;
+            line-height: 1.45;
+            letter-spacing: -0.015em;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 32px;
+            display: block;
+        }
+
+        .body-text {
+            font-size: 19px; /* Increased from 17px for better presence */
+            line-height: 1.55; /* Relaxed reading rhythm */
+            color: var(--text-secondary);
+            max-width: 660px;
+            font-weight: 400;
+            letter-spacing: -0.011em;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 24px;
+        }
+        
+        @media (min-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr 1fr; }
+            .grid-12 { grid-template-columns: repeat(12, 1fr); }
+            .col-span-4 { grid-column: span 4; }
+            .col-span-8 { grid-column: span 8; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 24px 32px;
+            z-index: 50;
+            /* Enhanced Blur */
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-link {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover { color: var(--text-primary); }
+
+        /* Cards */
+        .project-card {
+            background: var(--surface);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.4s var(--ease-out), background 0.4s var(--ease-out);
+            border: 1px solid var(--divider);
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-card:hover {
+            background: var(--surface-highlight);
+            transform: scale(1.005);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 400px;
+            background-color: #080808;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-image-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s var(--ease-out);
+            opacity: 0.8;
+        }
+
+        .project-card:hover .card-image-inner {
+            transform: scale(1.03);
+            opacity: 1;
+        }
+
+        .card-meta {
+            padding: 32px;
+        }
+
+        .card-title {
+            font-size: 21px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+            letter-spacing: -0.015em;
+        }
+
+        .card-desc {
+            font-size: 16px; /* Slightly larger for readability */
+            color: var(--text-secondary);
+            line-height: 1.5;
+            letter-spacing: -0.01em;
+        }
+
+        /* Utility */
+        .spacer { height: 160px; }
+        .spacer-sm { height: 80px; }
+        
+        /* Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            will-change: transform, opacity;
+        }
+
+        /* Footer */
+        .footer-list li {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link:hover { color: var(--text-primary); }
+
     </style>
 </head>
-<body class="selection:bg-white selection:text-black pb-20">
+<body>
 
-    <!-- Navbar (Minimal) -->
-    <nav class="fixed top-0 left-0 right-0 z-40 px-6 py-4 flex justify-between items-center bg-black/80 backdrop-blur-md border-b border-white/10">
-        <span class="font-bold text-lg tracking-tight text-white">Ishit Singh</span>
-        <div class="bg-white text-black text-xs font-semibold px-3 py-1 rounded-full">Available</div>
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">Ishit Singh</a>
+            <div class="nav-links">
+                <a href="#work" class="nav-link">Index</a>
+                <a href="mailto:hello@ishit.com" class="nav-link">Contact</a>
+            </div>
+        </div>
     </nav>
 
-    <!-- Main Container -->
-    <main class="max-w-[1000px] mx-auto px-6 pt-32 animate-[fadeIn_0.8s_ease-out]">
-        
-        <!-- Header -->
-        <header class="mb-16">
-            <h1 class="text-6xl md:text-8xl font-extrabold text-white leading-[0.9]">
-                Design<br>
-                <span class="text-ios-subtext">Engineer.</span>
-            </h1>
-        </header>
+    <main>
+        <!-- Hero -->
+        <section class="container" style="min-height: 90vh; display: flex; flex-direction: column; justify-content: center;">
+            <div class="reveal">
+                <h1 class="hero-name">
+                    Designing systems<br>that disappear.
+                </h1>
+                <p class="hero-sub">
+                    I build high-performance interfaces where engineering meets interaction design. Focused on clarity, speed, and restraint.
+                </p>
+            </div>
+        </section>
 
-        <!-- Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[minmax(240px,auto)]">
-
-            <!-- 01: Bio -->
-            <div onclick="openModal('bio')" class="bento-card col-span-1 md:col-span-2 lg:row-span-2 p-8 flex flex-col justify-between cursor-pointer group">
-                <div class="flex justify-between items-start">
-                    <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border border-white/10">
-                        <span class="font-bold text-xl text-white">IS</span>
-                    </div>
-                    <i data-lucide="arrow-up-right" class="text-ios-subtext group-hover:text-white transition-colors"></i>
+        <!-- Approach -->
+        <section class="container">
+            <div class="grid grid-12">
+                <div class="col-span-4 reveal">
+                    <span class="section-label">01 / Approach</span>
                 </div>
-                <div>
-                    <h3 class="text-3xl font-bold mb-2">About Me</h3>
-                    <p class="text-ios-subtext font-medium leading-relaxed max-w-sm">
-                        A developer from India focused on the intersection of engineering and design.
+                <div class="col-span-8 reveal">
+                    <p class="body-text">
+                        The best interface is the one you don't notice. I believe in subtraction—removing noise until only the essential remains. My work prioritizes "time to interactive" and accessibility, ensuring that digital products feel like natural extensions of thought.
+                    </p>
+                    <p class="body-text" style="margin-top: 28px;">
+                        Currently defining design primitives for enterprise software and exploring WebAssembly for financial infrastructure.
                     </p>
                 </div>
             </div>
+            <div class="spacer"></div>
+        </section>
 
-            <!-- 02: Portfolio (Inverted for Contrast) -->
-            <div onclick="openModal('portfolio')" class="bento-card col-span-1 md:col-span-2 p-8 flex flex-col justify-between cursor-pointer group !bg-white !border-white hover:!bg-gray-200">
-                <div class="flex justify-between items-start">
-                    <i data-lucide="layout" class="text-black/50"></i>
-                    <span class="text-xs font-bold uppercase tracking-widest text-black/50">Selected Works</span>
-                </div>
-                <div class="mt-8">
-                    <h3 class="text-4xl font-bold mb-1 text-black">Portfolio</h3>
-                    <p class="text-black/60 font-medium">2025 Edition</p>
+        <!-- Work -->
+        <section id="work" class="container">
+            <div class="reveal">
+                <span class="section-label">02 / Work</span>
+            </div>
+            
+            <div class="grid grid-2">
+                <!-- Project 1 -->
+                <a href="#" class="project-card reveal">
+                    <div class="card-image">
+                        <div class="card-image-inner" style="background: linear-gradient(to bottom right, #141414, #000000);"></div>
+                    </div>
+                    <div class="card-meta">
+                        <h3 class="card-title">Vault UI</h3>
+                        <p class="card-desc">Zero-latency banking dashboard.</p>
+                    </div>
+                </a>
+
+                <!-- Project 2 -->
+                <a href="#" class="project-card reveal">
+                     <div class="card-image">
+                        <div class="card-image-inner" style="background: linear-gradient(to bottom, #111111, #080808);"></div>
+                    </div>
+                    <div class="card-meta">
+                        <h3 class="card-title">Hydra Engine</h3>
+                        <p class="card-desc">Immutable state management infrastructure.</p>
+                    </div>
+                </a>
+
+                 <!-- Project 3 -->
+                 <a href="#" class="project-card reveal">
+                     <div class="card-image">
+                        <div class="card-image-inner" style="background: linear-gradient(135deg, #1C1C1E, #050505);"></div>
+                    </div>
+                    <div class="card-meta">
+                        <h3 class="card-title">Lumina System</h3>
+                        <p class="card-desc">Accessible design primitives for enterprise.</p>
+                    </div>
+                </a>
+
+                 <!-- Archive -->
+                 <div class="project-card reveal" style="display: flex; align-items: center; justify-content: center; background: transparent; border: 1px dashed var(--divider);">
+                    <div class="text-center p-8">
+                        <h3 class="card-title" style="color: var(--text-tertiary); font-size: 19px;">Archive</h3>
+                        <p class="card-desc" style="font-size: 15px;">Early experiments & prototypes</p>
+                    </div>
                 </div>
             </div>
+            <div class="spacer"></div>
+        </section>
 
-            <!-- 03: System -->
-            <div onclick="openModal('system')" class="bento-card col-span-1 p-8 flex flex-col justify-between cursor-pointer">
-                 <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center border border-white/5">
-                    <i data-lucide="cpu" class="w-6 h-6 text-white"></i>
-                 </div>
-                 <div>
-                    <h3 class="text-xl font-bold">System</h3>
-                    <p class="text-ios-subtext text-sm">Architecture</p>
-                 </div>
-            </div>
-
-            <!-- 04: Philosophy -->
-            <div onclick="openModal('philosophy')" class="bento-card col-span-1 p-8 flex flex-col justify-center items-center text-center cursor-pointer">
-                <span class="text-5xl font-bold tracking-tighter mb-2 text-white">100%</span>
-                <span class="text-ios-subtext font-semibold text-sm uppercase tracking-wide">Invisible Tech</span>
-            </div>
-
-            <!-- 05: UI Lab -->
-            <div onclick="openModal('ui-lab')" class="bento-card col-span-1 md:col-span-2 p-8 flex items-center justify-between cursor-pointer group">
-                <div class="flex flex-col justify-center h-full">
-                    <span class="text-xs font-bold uppercase tracking-widest text-ios-subtext mb-2">Research</span>
-                    <h3 class="text-3xl font-bold">UI Lab</h3>
-                    <p class="text-ios-subtext mt-1">Motion Psychology</p>
+        <!-- Info -->
+        <section class="container">
+            <div class="grid grid-12">
+                <div class="col-span-4 reveal">
+                    <span class="section-label">03 / Information</span>
                 </div>
-                <!-- Abstract Graphic -->
-                <div class="w-24 h-24 rounded-full border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                    <div class="w-16 h-16 rounded-full bg-white/5 backdrop-blur-sm blur-md"></div>
-                </div>
-            </div>
-
-            <!-- 06: Contact -->
-            <div class="bento-card col-span-1 md:col-span-2 p-8 flex items-center justify-between cursor-pointer hover:!bg-white group transition-colors duration-300">
-                <div>
-                    <h3 class="text-2xl font-bold group-hover:text-black transition-colors">Let's Collaborate</h3>
-                    <p class="text-ios-subtext group-hover:text-black/60 transition-colors">Open for projects</p>
-                </div>
-                <div class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
-                    <i data-lucide="mail" class="w-5 h-5"></i>
+                <div class="col-span-8 reveal">
+                    <div class="grid grid-2">
+                        <div>
+                            <h4 class="section-label" style="margin-bottom: 20px; color: var(--text-primary);">Domain</h4>
+                            <ul class="footer-list list-none">
+                                <li>Interface Architecture</li>
+                                <li>Design Systems</li>
+                                <li>Interaction Design</li>
+                                <li>Performance Engineering</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="section-label" style="margin-bottom: 20px; color: var(--text-primary);">Connect</h4>
+                            <ul class="footer-list list-none">
+                                <li><a href="#" class="footer-link">Twitter / X</a></li>
+                                <li><a href="#" class="footer-link">GitHub</a></li>
+                                <li><a href="#" class="footer-link">LinkedIn</a></li>
+                                <li><a href="mailto:hello@ishit.com" class="footer-link">Email</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="spacer-sm"></div>
+        </section>
 
-        </div>
-
-        <!-- Footer -->
-        <footer class="mt-20 pt-10 border-t border-white/10 flex justify-between items-center text-ios-subtext text-sm">
-            <p>© 2025 Ishit Singh.</p>
-            <p>Designed in California.</p>
+        <footer class="container py-12 border-t border-[rgba(255,255,255,0.06)]">
+            <p class="text-xs text-[#555]">&copy; 2025 Ishit Singh. Crafted with discipline.</p>
         </footer>
-
     </main>
 
-    <!-- Modal Overlay -->
-    <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
-        <!-- Backdrop -->
-        <div id="modal-backdrop" onclick="closeModal()" class="absolute inset-0 opacity-0 transition-opacity duration-500"></div>
-        
-        <!-- Modal Card -->
-        <div id="modal-content" class="relative w-full max-w-2xl bg-[#1C1C1E] rounded-[40px] shadow-modal overflow-hidden transform scale-95 opacity-0 transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) max-h-[85vh] flex flex-col border border-white/10">
-            
-            <!-- Sticky Header -->
-            <div class="px-8 pt-8 pb-4 bg-[#1C1C1E]/90 backdrop-blur-sm sticky top-0 z-10 flex justify-between items-center border-b border-white/5">
-                <div>
-                    <h2 id="modal-title" class="text-3xl font-bold text-white tracking-tight">Title</h2>
-                    <p id="modal-subtitle" class="text-ios-subtext font-medium mt-1">Subtitle</p>
-                </div>
-                <button onclick="closeModal()" class="w-10 h-10 rounded-full bg-[#2C2C2E] hover:bg-white hover:text-black text-gray-400 flex items-center justify-center transition-colors">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <!-- Content -->
-            <div id="modal-body" class="px-8 py-8 overflow-y-auto text-lg leading-relaxed text-gray-300 space-y-6">
-                <!-- Injected via JS -->
-            </div>
-            
-            <!-- Bottom Fade for scroll hint -->
-            <div class="h-8 bg-gradient-to-t from-[#1C1C1E] to-transparent pointer-events-none sticky bottom-0"></div>
-        </div>
-    </div>
-
-    <!-- Logic -->
     <script>
-        const contentData = {
-            'bio': {
-                title: 'Design Engineer',
-                subtitle: 'About Me',
-                body: `<p class="text-white text-xl font-medium mb-4">Engineering meets design in a pursuit of absolute simplicity.</p>
-                       <p>I am a developer from India with a passion for building beautiful and functional web applications. My journey started with a fascination for how code can transform a blank screen into a powerful tool.</p>
-                       <p>My expertise lies in front-end development, specifically in creating fluid interfaces with modern frameworks. I am deeply committed to the idea of "Web Performance as a Feature," ensuring that every millisecond is accounted for.</p>`
-            },
-            'portfolio': {
-                title: 'Portfolio 2025',
-                subtitle: 'Selected Works',
-                body: `<p class="text-white text-xl font-medium mb-4">A digital gallery of work.</p>
-                       <p>A simple and clean portfolio website built using HTML and CSS. This project focuses on minimalism and effective typography to showcase developer skills.</p>
-                       <p>Designed with the precision of a physical product, avoiding unnecessary flair in favor of usability and speed.</p>`
-            },
-            'system': {
-                title: 'System Architecture',
-                subtitle: 'Research',
-                body: `<p class="text-white text-xl font-medium mb-4">Bridging the gap.</p>
-                       <p>Currently engineering a high-performance system architecture. This involves researching how to bridge the gap between low-level performance and high-level abstraction.</p>
-                       <p>The goal is to create a library that allows developers to build complex applications without sacrificing speed.</p>`
-            },
-            'philosophy': {
-                title: 'Philosophy',
-                subtitle: 'Invisible Tech',
-                body: `<p class="text-white text-xl font-medium mb-4">100% Invisible.</p>
-                       <p>I believe that technology should be invisible. The best software doesn't scream for attention; it quietly empowers the user to do more.</p>
-                       <p>Following the principles of Human Interface Guidelines, I aim to create software that feels native to the user's workflow.</p>`
-            },
-            'ui-lab': {
-                title: 'UI Lab',
-                subtitle: 'Motion Psychology',
-                body: `<p class="text-white text-xl font-medium mb-4">The feel of software.</p>
-                       <p>An ongoing exploration into the psychology of motion. How does a 200ms blur impact the perceived value of a digital product?</p>
-                       <p>By studying user interactions and system feedback, I am building a set of guidelines for high-end web motion.</p>`
-            }
-        };
+        gsap.registerPlugin(ScrollTrigger);
 
-        const modal = document.getElementById('modal');
-        const backdrop = document.getElementById('modal-backdrop');
-        const content = document.getElementById('modal-content');
-        const modalTitle = document.getElementById('modal-title');
-        const modalSubtitle = document.getElementById('modal-subtitle');
-        const modalBody = document.getElementById('modal-body');
-
-        function openModal(id) {
-            const data = contentData[id];
-            if (!data) return;
-
-            modalTitle.innerText = data.title;
-            modalSubtitle.innerText = data.subtitle;
-            modalBody.innerHTML = data.body;
-
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            // Animation Frame for transition
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    backdrop.classList.remove('opacity-0');
-                    content.classList.remove('scale-95', 'opacity-0');
-                    content.classList.add('scale-100', 'opacity-100');
-                });
+        // Smooth reveal animation
+        const reveals = document.querySelectorAll('.reveal');
+        
+        reveals.forEach((el) => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 88%",
+                    toggleActions: "play none none reverse"
+                },
+                y: 0,
+                opacity: 1,
+                duration: 1.0,
+                ease: "power2.out"
             });
+        });
 
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            backdrop.classList.add('opacity-0');
-            content.classList.remove('scale-100', 'opacity-100');
-            content.classList.add('scale-95', 'opacity-0');
-
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                document.body.style.overflow = '';
-            }, 500);
-        }
-
-        lucide.createIcons();
+        // Hero sequence
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to(".hero-name", { y: 0, opacity: 1, duration: 1.2, ease: "power2.out" })
+              .to(".hero-sub", { y: 0, opacity: 1, duration: 1.2, ease: "power2.out" }, "-=1.0");
+        });
     </script>
 </body>
 </html>
