@@ -28,28 +28,26 @@
             },
             colors: {
               background: '#000000',
-              card: '#1C1C1E', // iOS System Gray 6 Dark
+              card: '#1C1C1E', // Apple Fitness Dark Gray
               cardHover: '#2C2C2E',
-              primary: '#0A84FF', // iOS Blue Dark
-              secondary: '#8E8E93',
+              accent: '#32D74B', // Apple Fitness Green
+              primary: '#0A84FF',
             },
             boxShadow: {
-              'ios-card': '0 10px 30px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
-              'ios-card-hover': '0 20px 40px -10px rgba(0, 0, 0, 0.9), inset 0 1px 0 0 rgba(255, 255, 255, 0.15)',
-              'ios-modal': '0 25px 50px -12px rgba(0, 0, 0, 1), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)'
+              'ios-depth': '0 20px 40px -10px rgba(0,0,0,0.7)',
             },
             animation: {
-              'scale-in': 'scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-              'fade-in': 'fadeIn 0.5s ease-out',
+              'fade-in': 'fadeIn 0.6s ease-out forwards',
+              'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
             },
             keyframes: {
-              scaleIn: {
-                '0%': { transform: 'scale(0.95)', opacity: '0' },
-                '100%': { transform: 'scale(1)', opacity: '1' },
-              },
               fadeIn: {
                 '0%': { opacity: '0' },
                 '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(40px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
               }
             }
           }
@@ -70,124 +68,152 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Card Interactions */
+        /* iOS Card Style */
         .bento-card {
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+            background-color: #1C1C1E;
+            border-radius: 2rem; /* 32px */
             border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .bento-card:hover {
-            transform: scale(1.02);
-            background-color: #2C2C2E;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
         }
         .bento-card:active {
-            transform: scale(0.98);
+            transform: scale(0.96);
+            background-color: #2C2C2E;
         }
 
-        /* Modal Backdrop */
-        #modal-backdrop {
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        /* SVG Ring Animation */
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s ease-in-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
         }
+
+        /* Dot Grid */
+        .dot-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 6px;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+        }
+        .dot.active { background-color: #32D74B; box-shadow: 0 0 8px rgba(50, 215, 75, 0.4); }
+        .dot.semi { background-color: rgba(50, 215, 75, 0.4); }
+
+        #modal-backdrop { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
     </style>
 </head>
-<body class="selection:bg-blue-500 selection:text-white">
+<body class="selection:bg-green-500 selection:text-black">
 
-    <!-- Landing / Hero -->
-    <header class="h-screen flex items-center justify-center animate-fade-in p-4">
-        <h1 class="text-6xl md:text-9xl font-bold tracking-tighter text-white text-center drop-shadow-2xl">Ishit Singh.</h1>
+    <!-- Landing Hero -->
+    <header class="h-screen flex flex-col items-center justify-center p-4">
+        <h1 class="text-6xl md:text-9xl font-bold tracking-tighter text-white text-center animate-slide-up" style="animation-delay: 0.1s;">Ishit Singh.</h1>
     </header>
 
-    <!-- Grid Layout -->
-    <main class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)] animate-fade-in px-4 md:px-8 pb-20">
+    <!-- Main Grid -->
+    <main class="max-w-md md:max-w-5xl mx-auto px-4 md:px-8 pb-32 grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
 
-        <!-- Bio Card (Large) -->
-        <div onclick="openModal('bio')" class="bento-card col-span-1 md:col-span-2 md:row-span-2 bg-card rounded-[2rem] p-8 cursor-pointer relative overflow-hidden group">
-            <div class="flex flex-col h-full justify-between relative z-10">
-                <div class="w-16 h-16 rounded-full bg-gray-800 mb-6 flex items-center justify-center text-2xl shadow-inner border border-white/5">IS</div>
-                <div>
-                    <h2 class="text-3xl font-bold leading-tight mb-4">Engineering meets design in a pursuit of absolute simplicity.</h2>
-                    <p class="text-gray-400 font-medium">Design Engineer based in India.</p>
+        <!-- Card 1: Bio (Mimics Calendar/Activity Card) -->
+        <div onclick="openModal('bio')" class="bento-card col-span-1 md:col-span-2 md:row-span-2 p-6 flex flex-col justify-between cursor-pointer group animate-slide-up" style="animation-delay: 0.2s;">
+            <!-- Dot Visualization -->
+            <div class="w-full h-32 md:h-40 flex items-center justify-center opacity-80 mt-2">
+                <div class="dot-grid" id="bio-dots">
+                    <!-- Dots injected via JS -->
                 </div>
             </div>
-            <div class="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity text-gray-500">
-                <i data-lucide="arrow-up-right"></i>
-            </div>
-        </div>
 
-        <!-- Project 1: Portfolio -->
-        <div onclick="openModal('portfolio')" class="bento-card col-span-1 md:col-span-2 bg-card rounded-[2rem] p-6 cursor-pointer relative overflow-hidden group min-h-[240px]">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-transparent"></div>
-            <div class="relative z-10 flex flex-col h-full justify-between">
-                <div class="flex justify-between items-start">
-                    <div class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-bold uppercase border border-blue-500/20 shadow-sm">2025</div>
-                    <i data-lucide="layout" class="text-gray-500"></i>
+            <div class="flex items-center gap-4 mt-4">
+                <div class="relative w-12 h-12 flex items-center justify-center">
+                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 36 36">
+                        <path class="text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
+                        <path class="text-green-500 progress-ring__circle" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-dashoffset="25" />
+                    </svg>
+                    <span class="text-xs font-bold text-white">IS</span>
                 </div>
                 <div>
-                    <h3 class="text-2xl font-bold text-white mb-1 drop-shadow-md">Portfolio Website</h3>
-                    <p class="text-gray-400 text-sm">Minimalist SPA logic</p>
+                    <h2 class="text-xl font-bold text-white">Design Engineer</h2>
+                    <p class="text-gray-500 text-sm font-medium">About Me</p>
                 </div>
             </div>
         </div>
 
-        <!-- Philosophy Widget -->
-        <div onclick="openModal('philosophy')" class="bento-card col-span-1 bg-card rounded-[2rem] p-6 cursor-pointer flex flex-col justify-between">
-            <i data-lucide="zap" class="text-yellow-500 w-8 h-8 drop-shadow-lg"></i>
-            <div>
-                <div class="text-3xl font-bold text-white">Invisible</div>
-                <div class="text-xs text-gray-500 font-bold uppercase tracking-wide mt-1">Technology</div>
-            </div>
-        </div>
-
-        <!-- Stack Widget -->
-        <div class="bento-card col-span-1 bg-card rounded-[2rem] p-6 cursor-pointer flex flex-col justify-center items-center text-center gap-3">
-            <div class="flex -space-x-2 filter drop-shadow-md">
-                <div class="w-8 h-8 rounded-full bg-gray-700 border-2 border-card flex items-center justify-center text-[10px] font-bold z-30">TS</div>
-                <div class="w-8 h-8 rounded-full bg-gray-700 border-2 border-card flex items-center justify-center text-[10px] font-bold z-20">Re</div>
-                <div class="w-8 h-8 rounded-full bg-gray-700 border-2 border-card flex items-center justify-center text-[10px] font-bold z-10">Rs</div>
-            </div>
-            <div class="text-sm font-bold text-gray-300">Core Stack</div>
-        </div>
-
-        <!-- Project 2: Future System -->
-        <div onclick="openModal('system')" class="bento-card col-span-1 md:col-span-2 bg-card rounded-[2rem] p-6 cursor-pointer relative overflow-hidden group min-h-[240px]">
-            <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-transparent"></div>
-            <div class="relative z-10 flex flex-col h-full justify-between">
-                <div class="flex justify-between items-start">
-                    <div class="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-xs font-bold uppercase border border-purple-500/20 shadow-sm">Research</div>
-                    <i data-lucide="cpu" class="text-gray-500"></i>
+        <!-- Card 2: Portfolio (Mimics Workout Card) -->
+        <div onclick="openModal('portfolio')" class="bento-card col-span-1 md:col-span-2 p-6 flex flex-col justify-between cursor-pointer min-h-[220px] animate-slide-up" style="animation-delay: 0.3s;">
+            <div class="flex justify-between items-start">
+                 <!-- Ring Icon -->
+                <div class="relative w-14 h-14">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="28" cy="28" r="24" stroke="#333" stroke-width="4" fill="none" />
+                        <circle cx="28" cy="28" r="24" stroke="#0A84FF" stroke-width="4" fill="none" stroke-dasharray="150" stroke-dashoffset="30" stroke-linecap="round" />
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i data-lucide="layout" class="w-5 h-5 text-white"></i>
+                    </div>
                 </div>
+                <div class="p-2 rounded-full bg-gray-800/50">
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h3 class="text-2xl font-bold text-white">Portfolio 2025</h3>
+                <p class="text-gray-500 font-medium">Selected Works</p>
+            </div>
+        </div>
+
+        <!-- Card 3: System (Mimics Stats Card) -->
+        <div onclick="openModal('system')" class="bento-card col-span-1 md:col-span-1 p-6 flex flex-col justify-between cursor-pointer animate-slide-up" style="animation-delay: 0.4s;">
+            <div class="flex items-baseline gap-1">
+                <span class="text-4xl font-bold text-white">v2.0</span>
+                <span class="text-gray-500 font-medium">arch</span>
+            </div>
+            <div class="mt-8">
+                <h3 class="text-lg font-bold text-white">System</h3>
+                <p class="text-gray-500 text-xs">Research</p>
+            </div>
+        </div>
+
+        <!-- Card 4: Philosophy (Mimics Stats Card) -->
+        <div onclick="openModal('philosophy')" class="bento-card col-span-1 md:col-span-1 p-6 flex flex-col justify-between cursor-pointer animate-slide-up" style="animation-delay: 0.5s;">
+             <div class="flex items-baseline gap-1">
+                <span class="text-4xl font-bold text-white">100</span>
+                <span class="text-gray-500 font-medium">%</span>
+            </div>
+            <div class="mt-8">
+                <h3 class="text-lg font-bold text-white">Philosophy</h3>
+                <p class="text-gray-500 text-xs">Invisible Tech</p>
+            </div>
+        </div>
+
+        <!-- Card 5: UI Lab (Mimics Chart Card) -->
+        <div onclick="openModal('ui-lab')" class="bento-card col-span-1 md:col-span-2 p-6 flex flex-col justify-between cursor-pointer animate-slide-up" style="animation-delay: 0.6s;">
+            <div class="flex items-end space-x-2 h-16 pb-2 border-b border-gray-800 mb-4">
+                <div class="w-1/6 bg-gray-800 h-8 rounded-t-sm"></div>
+                <div class="w-1/6 bg-gray-700 h-12 rounded-t-sm"></div>
+                <div class="w-1/6 bg-gray-600 h-10 rounded-t-sm"></div>
+                <div class="w-1/6 bg-pink-600 h-14 rounded-t-sm shadow-[0_0_15px_rgba(219,39,119,0.5)]"></div>
+                <div class="w-1/6 bg-gray-600 h-6 rounded-t-sm"></div>
+                <div class="w-1/6 bg-gray-700 h-10 rounded-t-sm"></div>
+            </div>
+            <div class="flex justify-between items-end">
                 <div>
-                    <h3 class="text-2xl font-bold text-white mb-1 drop-shadow-md">System Architecture</h3>
-                    <p class="text-gray-400 text-sm">High-performance bridge</p>
+                    <h3 class="text-xl font-bold text-white">UI Research Lab</h3>
+                    <p class="text-gray-500 font-medium text-sm">Motion Psychology</p>
                 </div>
+                <span class="text-2xl font-bold text-pink-500">Exp. 04</span>
             </div>
         </div>
 
-        <!-- Project 3: UI Lab -->
-        <div onclick="openModal('ui-lab')" class="bento-card col-span-1 md:col-span-2 bg-card rounded-[2rem] p-6 cursor-pointer relative overflow-hidden group min-h-[240px]">
-            <div class="relative z-10 flex flex-col h-full justify-between">
-                <div class="flex justify-between items-start">
-                    <div class="bg-pink-500/20 text-pink-400 px-3 py-1 rounded-full text-xs font-bold uppercase border border-pink-500/20 shadow-sm">Ongoing</div>
-                    <i data-lucide="eye" class="text-gray-500"></i>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-bold text-white mb-1 drop-shadow-md">UI Research Lab</h3>
-                    <p class="text-gray-400 text-sm">Psychology of Motion</p>
-                </div>
+         <!-- Contact -->
+        <div class="bento-card col-span-1 md:col-span-2 bg-[#0A84FF] border-none p-6 flex items-center justify-between cursor-pointer animate-slide-up group" style="animation-delay: 0.7s; background-color: #0A84FF;">
+             <div>
+                <h3 class="text-xl font-bold text-white">Let's Collaborate</h3>
+                <p class="text-blue-100 font-medium text-sm">Open for 2025</p>
             </div>
-        </div>
-
-        <!-- Contact -->
-        <div class="bento-card col-span-1 md:col-span-4 bg-[#0A84FF] rounded-[2rem] p-8 cursor-pointer text-center md:text-left md:flex justify-between items-center group shadow-[0_0_30px_-5px_rgba(10,132,255,0.4)] hover:shadow-[0_0_40px_-5px_rgba(10,132,255,0.6)] border-none">
-            <div>
-                <h3 class="text-2xl font-bold text-white">Let's collaborate</h3>
-                <p class="text-blue-100 font-medium">Open for select projects in 2025</p>
-            </div>
-            <div class="mt-4 md:mt-0 bg-white/20 p-3 rounded-full text-white group-hover:scale-110 transition-transform shadow-lg border border-white/20">
-                <i data-lucide="mail"></i>
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-blue-600 transition-colors text-white">
+                <i data-lucide="mail" class="w-5 h-5"></i>
             </div>
         </div>
 
@@ -197,14 +223,14 @@
     <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
         <div id="modal-backdrop" onclick="closeModal()" class="absolute inset-0 bg-black/60 transition-opacity duration-300 opacity-0"></div>
         
-        <div id="modal-content" class="relative w-full max-w-lg bg-[#1C1C1E] rounded-[2.5rem] shadow-ios-modal border border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[85vh]">
+        <div id="modal-content" class="relative w-full max-w-lg bg-[#1C1C1E] rounded-[2.5rem] shadow-2xl border border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[85vh]">
             <!-- Modal Header -->
             <div class="px-8 pt-8 pb-4 flex justify-between items-start bg-[#1C1C1E] sticky top-0 z-20 border-b border-white/5">
                 <div>
-                    <h2 id="modal-title" class="text-3xl font-bold text-white drop-shadow-sm">Title</h2>
+                    <h2 id="modal-title" class="text-3xl font-bold text-white">Title</h2>
                     <p id="modal-subtitle" class="text-gray-500 font-medium mt-1">Subtitle</p>
                 </div>
-                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-[#2C2C2E] text-gray-400 flex items-center justify-center hover:bg-gray-700 hover:text-white transition-colors border border-white/5 shadow-sm">
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-[#2C2C2E] text-gray-400 flex items-center justify-center hover:bg-gray-700 hover:text-white transition-colors">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -218,36 +244,52 @@
 
     <!-- Data & Scripts -->
     <script>
+        // Generate Dots for Bio Card
+        const dotContainer = document.getElementById('bio-dots');
+        for(let i=0; i<48; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (Math.random() > 0.7) dot.classList.add('active');
+            else if (Math.random() > 0.5) dot.classList.add('semi');
+            dotContainer.appendChild(dot);
+        }
+
         // Content Database
         const contentData = {
             'bio': {
-                title: 'About Me',
-                subtitle: 'Design Engineer',
-                body: `<p class="mb-4">I am a developer from India with a passion for building beautiful and functional web applications. My journey started with a fascination for how code can transform a blank screen into a powerful tool.</p>
-                       <p>My expertise lies in front-end development, specifically in creating fluid interfaces with modern frameworks. I am deeply committed to the idea of "Web Performance as a Feature," ensuring that every millisecond is accounted for.</p>`
+                title: 'Design Engineer',
+                subtitle: 'About Me',
+                body: `<p class="mb-6 text-xl text-white">Engineering meets design in a pursuit of absolute simplicity.</p>
+                       <p class="mb-4">I am a developer from India with a passion for building beautiful and functional web applications. My journey started with a fascination for how code can transform a blank screen into a powerful tool.</p>
+                       <p>My expertise lies in front-end development, specifically in creating fluid interfaces with modern frameworks.</p>`
             },
             'portfolio': {
-                title: 'Portfolio Website',
-                subtitle: '2025',
+                title: 'Portfolio 2025',
+                subtitle: 'Selected Works',
                 body: `<p class="mb-4">A simple and clean portfolio website built using HTML and CSS. This project focuses on minimalism and effective typography to showcase developer skills.</p>
-                       <p>Key features include OLED-optimized pure black backgrounds and a focus on scannability.</p>`
+                       <ul class="list-disc pl-5 space-y-2 text-gray-400">
+                           <li>Custom SPA logic</li>
+                           <li>OLED-optimized blacks</li>
+                           <li>Motion-rich interactions</li>
+                       </ul>`
             },
             'philosophy': {
-                title: 'My Philosophy',
-                subtitle: 'Principles',
+                title: '100% Invisible',
+                subtitle: 'My Philosophy',
                 body: `<p class="mb-4">I believe that technology should be invisible. The best software doesn't scream for attention; it quietly empowers the user to do more.</p>
                        <p>Following the principles of the Human Interface Guidelines, I aim to create software that feels native to the user's workflow.</p>`
             },
             'system': {
-                title: 'Future System Architecture',
-                subtitle: 'Research',
+                title: 'System v2.0',
+                subtitle: 'Architecture Research',
                 body: `<p class="mb-4">Currently engineering a high-performance system architecture. This involves researching how to bridge the gap between low-level performance and high-level abstraction.</p>
                        <p>The goal is to create a library that allows developers to build complex applications without sacrificing speed.</p>`
             },
             'ui-lab': {
                 title: 'UI Research Lab',
-                subtitle: 'Psychology',
-                body: `<p>An ongoing exploration into the psychology of motion. How does a 200ms blur impact the perceived value of a digital product? By studying user interactions and system feedback, I am building a set of guidelines for high-end web motion.</p>`
+                subtitle: 'Motion Psychology',
+                body: `<p class="mb-4">An ongoing exploration into the psychology of motion. How does a 200ms blur impact the perceived value of a digital product?</p>
+                       <p>By studying user interactions and system feedback, I am building a set of guidelines for high-end web motion.</p>`
             }
         };
 
@@ -272,7 +314,6 @@
             modal.classList.add('flex');
             
             // Animate In
-            // Double RAF to ensure class transition works after display change
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     backdrop.classList.remove('opacity-0');
@@ -294,7 +335,7 @@
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
                 document.body.style.overflow = '';
-            }, 300); // Match transition duration
+            }, 300);
         }
 
         // Initialize Icons
