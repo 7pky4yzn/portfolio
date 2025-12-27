@@ -1,174 +1,76 @@
-import React from 'react';
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import Section from './components/Section';
-import ProjectCard from './components/ProjectCard';
-import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
-
-const App: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-black text-textPrimary selection:bg-appleBlue selection:text-white">
-      <Navigation />
-
-      <Hero />
-
-      {/* Approach Section - Large Text */}
-      <Section id="approach">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-            <div className="md:col-span-3">
-                <span className="text-xs font-bold tracking-widest text-textSecondary uppercase">01 / Approach</span>
-            </div>
-            <div className="md:col-span-9">
-                <p className="text-2xl md:text-[32px] leading-[1.4] font-medium text-textPrimary tracking-tight">
-                    In a world of infinite noise, clarity is a superpower. 
-                    <span className="text-textSecondary"> We strip away the inessential to reveal the core purpose of every interaction. </span>
-                    Our process isn't just about writing code; it's about architecting flow states. 
-                    We obsess over the millisecond, the micro-interaction, and the silent rhythm of usability.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-20">
-                    <div>
-                        <h4 className="text-lg font-semibold text-white mb-4">Precision Engineering</h4>
-                        <p className="text-textSecondary text-lg leading-relaxed">
-                            Every line of code is a design decision. We leverage Rust and WebAssembly to bring desktop-class performance to the browser, ensuring zero latency.
-                        </p>
-                    </div>
-                    <div>
-                        <h4 className="text-lg font-semibold text-white mb-4">Human-Centric</h4>
-                        <p className="text-textSecondary text-lg leading-relaxed">
-                            Technology should feel organic. By studying cognitive patterns, we design interfaces that anticipate intent rather than just responding to input.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </Section>
-
-      {/* Work Section - Bento Grid */}
-      <Section id="work">
-        <div className="mb-16">
-            <span className="text-xs font-bold tracking-widest text-textSecondary uppercase mb-4 block">02 / Selected Work</span>
-            <h2 className="text-4xl md:text-6xl font-semibold tracking-tighter">Forged in fire.</h2>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ProjectCard 
-                title="Vault UI" 
-                category="Fintech" 
-                description="A zero-latency banking dashboard processing real-time market data via WebSocket streams."
-                imageGradient="bg-gradient-to-br from-blue-900 to-black"
-                size="large"
-            />
-            <ProjectCard 
-                title="Hydra" 
-                category="Infrastructure" 
-                description="Immutable state management infrastructure for distributed teams."
-                imageGradient="bg-gradient-to-tr from-purple-900 to-black"
-            />
-            <ProjectCard 
-                title="Lumina" 
-                category="Design System" 
-                description="An accessible, enterprise-grade design primitive library."
-                imageGradient="bg-gradient-to-bl from-emerald-900 to-black"
-            />
-            <ProjectCard 
-                title="Chronos" 
-                category="Productivity" 
-                description="Time-bending calendar interface for global remote teams."
-                imageGradient="bg-gradient-to-br from-orange-900 to-black"
-            />
-             <ProjectCard 
-                title="Aether" 
-                category="R&D" 
-                description="Experimental spatial audio interface for the web."
-                imageGradient="bg-gradient-to-tr from-gray-800 to-black"
-            />
-        </div>
-      </Section>
-
-      {/* Philosophy Section */}
-      <Section id="philosophy" className="bg-surfaceHighlight rounded-[40px] my-24 py-32">
-        <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-6xl font-semibold tracking-tighter mb-8">
-                Complexity is easy.<br/>Simplicity is hard.
-            </h2>
-            <p className="text-xl text-textSecondary leading-relaxed max-w-2xl mx-auto">
-                We don't just build websites; we craft digital environments. Every pixel is negotiated, every animation curve is tuned, and every latency hurdle is overcome. This is software development as a discipline of craft.
-            </p>
-        </div>
-      </Section>
-
-      {/* Footer / Contact */}
-      <Section>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-t border-white/10 pt-20">
-             <div className="md:col-span-4">
-                <span className="text-xs font-bold tracking-widest text-textSecondary uppercase block mb-8">03 / Connect</span>
-                <h3 className="text-3xl font-semibold tracking-tight mb-2">Ishit Singh</h3>
-                <p className="text-textSecondary">Interface Engineer & Designer</p>
-            </div>
-
-            <div className="md:col-span-4">
-                 <h4 className="text-sm font-semibold text-white mb-6 uppercase tracking-wider">Social</h4>
-                 <ul className="space-y-4">
-                    <li>
-                        <a href="#" className="flex items-center gap-3 text-textSecondary hover:text-white transition-colors group">
-                            <Twitter size={18} />
-                            <span className="group-hover:translate-x-1 transition-transform">Twitter / X</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="flex items-center gap-3 text-textSecondary hover:text-white transition-colors group">
-                            <Github size={18} />
-                            <span className="group-hover:translate-x-1 transition-transform">GitHub</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" className="flex items-center gap-3 text-textSecondary hover:text-white transition-colors group">
-                            <Linkedin size={18} />
-                            <span className="group-hover:translate-x-1 transition-transform">LinkedIn</span>
-                        </a>
-                    </li>
-                 </ul>
-            </div>
-
-            <div className="md:col-span-4">
-                <h4 className="text-sm font-semibold text-white mb-6 uppercase tracking-wider">Inquiries</h4>
-                <a 
-                    href="mailto:hello@ishit.com" 
-                    className="inline-flex items-center gap-2 text-2xl font-medium text-white hover:text-appleBlue transition-colors"
-                >
-                    hello@ishit.com
-                    <ArrowUpRight size={24} />
-                </a>
-                <p className="mt-4 text-textSecondary text-sm">
-                    Open for select freelance opportunities in 2025.
-                </p>
-            </div>
-        </div>
-        
-        <div className="mt-24 pt-8 text-center text-xs text-textSecondary/40">
-            &copy; {new Date().getFullYear()} Ishit Singh. Crafted with discipline in the void.
-        </div>
-      </Section>
-    </div>
-  );
-};
-
-// Helper component for arrow icon reuse
-const ArrowUpRight = ({ size, className }: { size: number, className?: string }) => (
-    <svg 
-        width={size} 
-        height={size} 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="2" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"
-        className={className}
-    >
-        <line x1="7" y1="17" x2="17" y2="7"></line>
-        <polyline points="7 7 17 7 17 17"></polyline>
-    </svg>
-);
-
-export default App;
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ishit Singh - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            },
+            colors: {
+              'amoled-black': '#000000',
+              'amoled-card': '#0A0A0A',
+              'amoled-text': '#EDEDED',
+              'amoled-muted': '#86868b',
+            },
+            letterSpacing: {
+              tightest: '-.075em',
+              tighter: '-.05em',
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #000000;
+        color: #EDEDED;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .fade-in-section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1s ease-out, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        will-change: opacity, visibility;
+      }
+      .fade-in-section.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+      /* Hide Scrollbar */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
